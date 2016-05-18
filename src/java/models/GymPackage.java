@@ -18,16 +18,18 @@ public class GymPackage {
     private final double price;
     private final String gymName;
     private final String description;
-    private final BufferedImage imagePath;
+    private final BufferedImage image;
+    //private final String imagePath; //save photo in file and just get the path ??????????
     private final boolean available;
 
-    public GymPackage(String name, String type, double price, String gymName, String description, BufferedImage imagePath, boolean available) {
+    public GymPackage(String name, String type, double price, String gymName, String description, BufferedImage image/*, String imagePath*/, boolean available) {
         this.name = name;
         this.type = type;
         this.price = price;
         this.gymName = gymName;
         this.description = description;
-        this.imagePath = imagePath;
+        this.image = image;
+        /*this.imagePath=imagePath;*/
         this.available = available;
     }
 
@@ -52,8 +54,12 @@ public class GymPackage {
     }
 
     public BufferedImage getImagePath() {
-        return imagePath;
+        return image;
     }
+    
+    /*public String getImagePath() {
+        return imagePath;
+    }*/
 
     public boolean isAvailable() {
         return available;

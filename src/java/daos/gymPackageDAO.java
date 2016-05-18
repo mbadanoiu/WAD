@@ -6,7 +6,6 @@
 
 package daos;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import models.GymPackage;
 import utils.dbConnection;
 
@@ -44,7 +42,7 @@ public class gymPackageDAO {
     public boolean packageExists(String pName) throws ClassNotFoundException, SQLException {
         connection=dbConnection.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM PACKAGES p");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 if((rs.getString(1)).equals(pName)){
@@ -65,7 +63,7 @@ public class gymPackageDAO {
         try {
             File file = new File(imagePath);
             InputStream image = new FileInputStream(file);
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO GYMPACKAGES (NAME, TYPE, PRICE, GYM, DESCRIPTION, IMAGE, AVAILABLE)"
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO wadproject.gympackages (PACKNAME, PACKTYPE, PRICE, GYMNAME, DESCRIPTION, IMAGE, AVAILABLE)"
                     + " VALUES('"+name+"', '"+type+"', "+price+", '"+gym+"', '"+description+"', ? ,"+available+")");
             ps.setBinaryStream(6, image, (int) file.length()); ///////must be put as BLOB in pool
             ps.executeUpdate();
@@ -82,29 +80,31 @@ public class gymPackageDAO {
         ArrayList<GymPackage> packages=new ArrayList<>();
         connection=dbConnection.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM GYMPACKAGES p");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
             int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
             while (rs.next()){
                 rowsNo++;
                 for(int i=1; i<=columnsNo; i++){
-                    if(i==6)
-                        imgTemp.add(rs.getBlob(i));
-                    else
-                        temp.add(rs.getString(i));
+                    if(type.equals(rs.getString("PACKTYPE")) || type.equalsIgnoreCase("All")){
+                        if(i==6)
+                            imgTemp.add(rs.getBlob(i));
+                        else
+                            temp.add(rs.getString(i));
+                    }
                 }
             }
             columnsNo--;
             for(int i=0; i<rowsNo; i++){
-                if(type.equals(temp.get(i*columnsNo+1)) || type.equals("All")){
+                //if(type.equals(temp.get(i*columnsNo+1)) || type.equals("All")){
                     Blob blob = imgTemp.get(i);
                     InputStream binaryStream = blob.getBinaryStream(0, blob.length());
                     BufferedImage im = ImageIO.read(binaryStream);
-                    packages.add(new GymPackage(temp.get(i*columnsNo), temp.get(i*columnsNo+1),
-                            Double.parseDouble(temp.get(i*columnsNo+2)), temp.get(i*columnsNo+3), temp.get(i*columnsNo+4),
-                            im, Boolean.parseBoolean(temp.get(i*columnsNo+5))));
-                }
+                    packages.add(new GymPackage(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2),
+                            Double.parseDouble(temp.get(i*columnsNo+3)), temp.get(i*columnsNo+4), temp.get(i*columnsNo+5),
+                            im, Boolean.parseBoolean(temp.get(i*columnsNo+6))));
+                //}
             }
             ps.close();
         }
@@ -120,29 +120,31 @@ public class gymPackageDAO {
         ArrayList<GymPackage> packages=new ArrayList<>();
         connection=dbConnection.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM GYMPACKAGES p");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
             int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
             while (rs.next()){
                 rowsNo++;
                 for(int i=1; i<=columnsNo; i++){
-                    if(i==6)
-                        imgTemp.add(rs.getBlob(i));
-                    else
-                        temp.add(rs.getString(i));
+                    if(gym.equals(rs.getString("GYMNAME")) || gym.equalsIgnoreCase("All")){
+                        if(i==6) ////////////////////remember to remove it or consider the displacement made by image path 
+                            imgTemp.add(rs.getBlob(i));
+                        else
+                            temp.add(rs.getString(i));
+                    }
                 }
             }
             columnsNo--;
             for(int i=0; i<rowsNo; i++){
-                if(gym.equals(temp.get(i*columnsNo+3)) || gym.equals("All")){
+                //if(gym.equals(temp.get(i*columnsNo+3)) || gym.equals("All")){
                     Blob blob = imgTemp.get(i);
                     InputStream binaryStream = blob.getBinaryStream(0, blob.length());
                     BufferedImage im = ImageIO.read(binaryStream);
-                    packages.add(new GymPackage(temp.get(i*columnsNo), temp.get(i*columnsNo+1),
-                            Double.parseDouble(temp.get(i*columnsNo+2)), temp.get(i*columnsNo+3), temp.get(i*columnsNo+4),
-                            im, Boolean.parseBoolean(temp.get(i*columnsNo+5))));
-                }
+                    packages.add(new GymPackage(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2),
+                            Double.parseDouble(temp.get(i*columnsNo+3)), temp.get(i*columnsNo+4), temp.get(i*columnsNo+5),
+                            im, Boolean.parseBoolean(temp.get(i*columnsNo+6))));
+                //}
             }
             ps.close();
         }
@@ -158,7 +160,7 @@ public class gymPackageDAO {
         ArrayList<GymPackage> packages=new ArrayList<>();
         connection=dbConnection.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM GYMPACKAGES p");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
             int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
@@ -176,9 +178,9 @@ public class gymPackageDAO {
                 Blob blob = imgTemp.get(i);
                 InputStream binaryStream = blob.getBinaryStream(0, blob.length());
                 BufferedImage im = ImageIO.read(binaryStream);
-                packages.add(new GymPackage(temp.get(i*columnsNo), temp.get(i*columnsNo+1),
-                        Double.parseDouble(temp.get(i*columnsNo+2)), temp.get(i*columnsNo+3), temp.get(i*columnsNo+4),
-                        im, Boolean.parseBoolean(temp.get(i*columnsNo+5))));
+                packages.add(new GymPackage(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2),
+                        Double.parseDouble(temp.get(i*columnsNo+3)), temp.get(i*columnsNo+4), temp.get(i*columnsNo+5),
+                        im, Boolean.parseBoolean(temp.get(i*columnsNo+6))));
             }
             ps.close();
         }

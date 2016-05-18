@@ -6,10 +6,21 @@
 
 package daos;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import models.Client;
+import utils.AES;
 import utils.Hash;
 import utils.dbConnection;
 
@@ -20,7 +31,8 @@ import utils.dbConnection;
 public class clientDAO {
     private Connection connection;
     private static clientDAO instance;
-    
+    //telephone and card are optional
+    //card number is encrypted with AES, needs also to be decrypted when used
     public static clientDAO getInstance() {
         if (instance == null) {
             instance = new clientDAO();
@@ -33,10 +45,10 @@ public class clientDAO {
     public boolean userExists(String username) throws ClassNotFoundException, SQLException {
         connection=dbConnection.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS u");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.clients");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                if((rs.getString(2)).equals(username)){
+                if((rs.getString("USERNAME")).equals(username)){
                     ps.close();
                     return true;
                 }
@@ -53,7 +65,7 @@ public class clientDAO {
         connection=dbConnection.getConnection();
         try {
             pass=Hash.makeHash(pass);
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO APP.USERS (NAME, USERNAME, PASSWORD, EMAIL, GENDER, TELEPHONE, COUNTRY, SUBSCRIBED)"
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO wadproject.clients (VIEWNAME, USERNAME, PASS, EMAIL, GENDER, TELEPHONE, COUNTRY, SUBSCRIBED)"
                     + " VALUES('"+name+"', '"+uname+"', '"+pass+"', '"+email+"', '"+gender+"', '"+tel+"', '"+country+"', "+sub+")");
             ps.executeUpdate();
             ps.close();
@@ -67,7 +79,13 @@ public class clientDAO {
         connection=dbConnection.getConnection();
         try {
             pass=Hash.makeHash(pass);
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO APP.USERS (NAME, USERNAME, PASSWORD, EMAIL, GENDER, TELEPHONE, COUNTRY, SUBSCRIBED, CREDITCARD)"
+            try {
+                creditCard=AES.encrypt(new Client(name, uname, email, gender, tel, country, sub), creditCard);
+            } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchProviderException | UnsupportedEncodingException ex) {
+                Logger.getLogger(clientDAO.class.getName()).log(Level.SEVERE, null, ex);
+                creditCard=null;
+            }
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO wadproject.clients (VIEWNAME, USERNAME, PASS, EMAIL, GENDER, TELEPHONE, COUNTRY, SUBSCRIBED, CREDITCARD)"
                     + " VALUES('"+name+"', '"+uname+"', '"+pass+"', '"+email+"', '"+gender+"', '"+tel+"', '"+country+"', "+sub+", '"+creditCard+"')");
             ps.executeUpdate();
             ps.close();
@@ -81,10 +99,10 @@ public class clientDAO {
         pass=Hash.makeHash(pass);
         connection=dbConnection.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS u");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.clients");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                if((rs.getString(2)).equals(username)){
+                if((rs.getString("USERNAME")).equals(username)){
                     String temp=rs.getString(3);
                     ps.close();
                     return pass.equals(temp);
@@ -100,10 +118,10 @@ public class clientDAO {
     public boolean isAdmin(String username){
         connection=dbConnection.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS u");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.clients");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                if((rs.getString(2)).equals(username)){
+                if((rs.getString("USERNAME")).equals(username)){
                     ps.close();
                     return rs.getBoolean("ADMIN");
                 }
