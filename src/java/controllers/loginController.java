@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,24 +38,26 @@ public class loginController extends HttpServlet {
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             clientDAO cd = clientDAO.getInstance();
-            if(!(cd.userExists(request.getParameter("uname")))){
-                out.println("!!!!Bad Username!!!!");
+            if(!(cd.userExists(request.getParameter("Username")))){
+                request.setAttribute("fail", true);
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
             }
             else{
-                String user=request.getParameter("uname");
-                String hash=Hash.makeHash(request.getParameter("password"));
-                if(cd.passwordMatch(user, hash)){
+                String user = request.getParameter("Username");
+                String pass = request.getParameter("Password");
+                if(cd.passwordMatch(user, pass)){
                     request.getSession().setAttribute("user", user);
                     request.getSession().setAttribute("admin", cd.isAdmin(user));
                     response.sendRedirect("index.jsp");
                 }
                 else{
-                    out.println("!!!Bad Password!!!");
+                    request.setAttribute("fail", true);
+                    RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                    rd.forward(request, response);
                 }
-            }
-            
+            }            
         }
     }
 

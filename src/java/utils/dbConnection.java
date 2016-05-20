@@ -19,13 +19,13 @@ public class dbConnection {
     public static Connection getConnection() {
         if (connection == null) {
             try {
-                String url = "jdbc:mysql://localhost/wap";
+                String url = "jdbc:mysql://localhost:3306/wadproject";
                 String user = "a";
                 String password = "a";
-                String driver="com.mysql.jdbc.Driver"; //must be changed if now a mysql pool
+                String driver="com.mysql.jdbc.Driver"; //must be changed if not a mysql pool
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, user, password);
-                connection.setAutoCommit(false);
+                connection.setAutoCommit(true);
             }  catch (ClassNotFoundException e) {
                 System.err.println("Could not load db driver");
                 e.printStackTrace();
@@ -36,4 +36,9 @@ public class dbConnection {
         }
         return connection;
     }
+    
+//    public static void main(String[] args){
+//        getConnection();
+//    }
+    
 }

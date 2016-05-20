@@ -192,10 +192,10 @@
     <div id="business_name">
       <span>WorthFit</span>
     </div>
-    <a href="gymfit.html"><div class="header_top last_header">Gym Packs</div></a>
-    <a href="blogfit.html"><div class="header_top">Blog</div></a>
-    <a href="registerfit.html"><div class="header_top">Register</div></a>
-    <a href="loginfit.html"><div class="header_top">Login</div></a>
+    <a href="gymfit.jsp"><div class="header_top last_header">Gym Packs</div></a>
+    <a href="blogfit.jsp"><div class="header_top">Blog</div></a>
+    <a href="registerfit.jsp"><div class="header_top">Register</div></a>
+    <a href="loginfit.jsp"><div class="header_top">Login</div></a>
     <!-- menu -->
   </div>
 </div>
@@ -206,8 +206,26 @@
     <div class="login_title">
       <span><b>Register</b></span>
     </div><br><br>
+    
+    <%--//////////////////////////////////////--%>
+            <% String temp = request.getParameter("ufail");
+                if(!temp.isEmpty())
+                    if(Boolean.parseBoolean(temp)) { %>
+                    <font size="30" color="red"> Registration Fail: Username Already Exists </font>
+                <% } %>
+            <% temp = request.getParameter("pfail");
+                if(!temp.isEmpty())
+                    if(Boolean.parseBoolean(temp)) { %>
+                    <font size="30" color="red"> Registration Fail: Password Repeat Mismatches Password </font>
+                <% } %>
+            <% temp = request.getParameter("rsuccess");
+                if(!temp.isEmpty())
+                    if(Boolean.parseBoolean(temp)) { %>
+                    <font size="30" color="green"> Register Success: Client Registration Success </font>
+                <% } %>
+    <%--//////////////////////////////////////--%>
    
-    <form action="login.php">
+    <form name="Form" method="POST" onsubmit="return validateForm()" action="registrationController">
       First Name:<br>
       <input type="text" name="fname" required><br>
       Last Name:<br>
@@ -226,7 +244,7 @@
       Telephone:<br>
       <input type="tel" name="usrtel"><br><br>
       Country:
-        <select>
+      <select name="country">
           <option value="null">Select Country</option>
           <option value="romania">Romania</option>
           <option value="indonesia">Indonesia</option>
