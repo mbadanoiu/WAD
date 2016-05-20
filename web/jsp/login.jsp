@@ -165,7 +165,17 @@
         
       }
       
-      
+      img {
+          vertical-align: middle;
+
+      }
+      .login_title{
+        width: 80px;
+        margin-right: auto;
+        margin-left: auto;
+        color:black;
+        font-size: 20px;
+      }
 
     </style>
  </head>
@@ -192,6 +202,9 @@
 <Br>
 <!-- Service div -->
 <div class="content">
+  <div class="login_title">
+  <span><b>Login</b></span>
+  </div><br><br>
   <div class="formdiv">
    
     <form action="login.php">
@@ -212,19 +225,16 @@
     <div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
       <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
-      <a href="contact.html"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Join Us</div></a>
-      <a href="programs.html"><div class="footerDetailSubtitle">Programs</div></a>
-      <a href="trainers.html"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href="programs.html"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="list.html"><div class="footerDetailSubtitle">List</div></a>
-      <a href="discounts.html"><div class="footerDetailSubtitle">Discounts</div></a>
+      <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
       
     </div>
   </div>
