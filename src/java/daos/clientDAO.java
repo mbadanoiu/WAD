@@ -103,7 +103,7 @@ public class clientDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 if((rs.getString("USERNAME")).equals(username)){
-                    String temp=rs.getString(3);
+                    String temp=rs.getString("PASS");
                     ps.close();
                     return pass.equals(temp);
                 }

@@ -192,10 +192,10 @@
     <div id="business_name">
       <span>WorthFit</span>
     </div>
-    <a href="gymfit.jsp"><div class="header_top last_header">Gym Packs</div></a>
-    <a href="blogfit.jsp"><div class="header_top">Blog</div></a>
-    <a href="registerfit.jsp"><div class="header_top">Register</div></a>
-    <a href="loginfit.jsp"><div class="header_top">Login</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/gymfit.jsp"><div class="header_top last_header">Gym Packs</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/blogfit.jsp"><div class="header_top">Blog</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
+    <a href="#"><div class="header_top">Login</div></a>
     <!-- menu -->
   </div>
 </div>
@@ -206,14 +206,14 @@
   <span><b>Login</b></span>
   </div><br><br>
   <%-- ///////////////////////////////// --%>
-            <% String temp = request.getParameter("fail");
-                if(!temp.isEmpty())
-                    if(Boolean.parseBoolean(temp)) { %>
-                    <font size="30" color="red"> Login Fail: Username or Password Mismatch </font>
+  <% Object temp = request.getAttribute("fail");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
+                    <font size="20" color="red"> Login Fail: Username or Password Mismatch </font>
             <% } %>
   <%-- ///////////////////////////////// --%>
   <div class="formdiv">
-      <form name="Form" method="POST" <%--onsubmit="return validateLogin()" optional asta daca vrei sa filtrezi characterele speciale--%> action="loginController">
+      <form name="Form" method="POST" <%--onsubmit="return validateLogin()" optional asta daca vrei sa filtrezi characterele speciale--%> action="http://localhost:8080/WADProject/loginController">
       Username:<br>
       <input type="text" name="Username"><br>
       Password:<br>

@@ -192,40 +192,45 @@
     <div id="business_name">
       <span>WorthFit</span>
     </div>
-    <a href="gymfit.jsp"><div class="header_top last_header">Gym Packs</div></a>
-    <a href="blogfit.jsp"><div class="header_top">Blog</div></a>
-    <a href="registerfit.jsp"><div class="header_top">Register</div></a>
-    <a href="loginfit.jsp"><div class="header_top">Login</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/gymfit.jsp"><div class="header_top last_header">Gym Packs</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/blogfit.jsp"><div class="header_top">Blog</div></a>
+    <a href="#"><div class="header_top">Register</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
     <!-- menu -->
   </div>
 </div>
 <Br>
 <!-- Service div -->
 <div class="content">
-  <div class="formdiv">
-    <div class="login_title">
-      <span><b>Register</b></span>
-    </div><br><br>
     
     <%--//////////////////////////////////////--%>
-            <% String temp = request.getParameter("ufail");
-                if(!temp.isEmpty())
-                    if(Boolean.parseBoolean(temp)) { %>
+            <% Object temp = request.getAttribute("ufail");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
                     <font size="30" color="red"> Registration Fail: Username Already Exists </font>
                 <% } %>
-            <% temp = request.getParameter("pfail");
-                if(!temp.isEmpty())
-                    if(Boolean.parseBoolean(temp)) { %>
+            <% temp = request.getAttribute("cfail");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
+                    <font size="30" color="red"> Registration Fail: A Valid Country Must Be Selected </font>
+                <% } %>
+            <% temp = request.getAttribute("pfail");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
                     <font size="30" color="red"> Registration Fail: Password Repeat Mismatches Password </font>
                 <% } %>
-            <% temp = request.getParameter("rsuccess");
-                if(!temp.isEmpty())
-                    if(Boolean.parseBoolean(temp)) { %>
+            <% temp = request.getAttribute("rsuccess");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
                     <font size="30" color="green"> Register Success: Client Registration Success </font>
                 <% } %>
     <%--//////////////////////////////////////--%>
-   
-    <form name="Form" method="POST" onsubmit="return validateForm()" action="registrationController">
+    
+  <div class="formdiv">
+    <div class="login_title">
+      <span><b>Register</b></span>
+    </div><br><br>  
+    <form name="Form" method="POST" onsubmit="return validateForm()" action="http://localhost:8080/WADProject/registrationController">
       First Name:<br>
       <input type="text" name="fname" required><br>
       Last Name:<br>
@@ -237,7 +242,7 @@
       Repeat Password:<br>
       <input type="password" name="rpassword" required><br><br>
       Gender:
-      <input type="radio" name="gender" value="male"> Male
+      <input type="radio" name="gender" value="male" checked> Male
       <input type="radio" name="gender" value="female"> Female<br><br>
       Email:<br>
       <input type="email" name="email" required><br>
@@ -254,7 +259,7 @@
       Subscription:
       <input type="checkbox" name="subscription"><br><br>
       <input type="submit" value="Register">
-      <input type="reset" name="reset">
+      <input type="reset" value="Reset">
     </form> 
 
   </div>

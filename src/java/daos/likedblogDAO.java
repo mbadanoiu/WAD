@@ -39,16 +39,18 @@ public class likedblogDAO {
         connection=dbConnection.getConnection();
         try {
             PreparedStatement psU = connection.prepareStatement("SELECT * FROM wadproject.clients"+
-                                                                    "WHERE USERNAME=' "+user+" ' ");
+                                                                    "WHERE USERNAME='"+user+"' ");
             PreparedStatement psB = connection.prepareStatement("SELECT * FROM wadproject.blogs"+
-                                                                    "WHERE PATH=' "+blogURL+" '");
+                                                                    "WHERE PATH='"+blogURL+"'");
             ResultSet rsU = psU.executeQuery();
             ResultSet rsB = psB.executeQuery();
+            rsU.next();
+            rsB.next();
             int u = rsU.getInt("x");
             int b = rsB.getInt("x");
             if((u != 0) && (b != 0)){
                 PreparedStatement ps2 = connection.prepareStatement("INSERT INTO wadproject.likedblogs (BLOG, USER)"
-                        + " VALUES("+ b +" , "+ u +")");
+                        + " VALUES("+ b +","+ u +")");
                 ps2.executeUpdate();
                 ps2.close();
             }            
@@ -64,16 +66,18 @@ public class likedblogDAO {
         connection=dbConnection.getConnection();
         try {
             PreparedStatement psU = connection.prepareStatement("SELECT * FROM wadproject.clients"+
-                                                                    "WHERE USERNAME=' "+user+" ' ");
+                                                                    "WHERE USERNAME='"+ user +"' ");
             PreparedStatement psB = connection.prepareStatement("SELECT * FROM wadproject.blogs"+
-                                                                    "WHERE PATH=' "+blogURL+" '");
+                                                                    "WHERE PATH='"+ blogURL +"'");
             ResultSet rsU = psU.executeQuery();
             ResultSet rsB = psB.executeQuery();
+            rsU.next();
+            rsB.next();
             int u = rsU.getInt("x");
             int b = rsB.getInt("x");
             if((u != 0) && (b != 0)){
-                PreparedStatement ps2 = connection.prepareStatement("DELETE FROM likedblogs WHERE USER = ' "+ u +" ' "+
-                                                                            " AND BLOG = ' "+ b +" ')");
+                PreparedStatement ps2 = connection.prepareStatement("DELETE FROM wadproject.likedblogs WHERE USER = '"+ u +"' "+
+                                                                            " AND BLOG = '"+ b +"')");
                 ps2.executeUpdate();
                 ps2.close();
             }            
@@ -90,14 +94,15 @@ public class likedblogDAO {
         connection=dbConnection.getConnection();
         try {
             PreparedStatement psU = connection.prepareStatement("SELECT * FROM wadproject.clients"+
-                                                                    "WHERE USERNAME=' "+user+" ' ");
+                                                                    "WHERE USERNAME= '"+user+"' ");
             ResultSet rsU = psU.executeQuery();
+            rsU.next();
             int u = rsU.getInt("x");
             if(u != 0){
-                PreparedStatement ps2 = connection.prepareStatement("SELECT FROM likedblogs WHERE USER = ' "+ u +" ' )");
+                PreparedStatement ps2 = connection.prepareStatement("SELECT FROM wadproject.likedblogs WHERE USER = '"+ u +"' )");
                 ResultSet rs2 = ps2.executeQuery();
                 while(rs2.next()){
-                    PreparedStatement ps3 = connection.prepareStatement("SELECT FROM blogs WHERE x = ' "+ Integer.parseInt(rs2.getString("BLOG")) +" ' )");
+                    PreparedStatement ps3 = connection.prepareStatement("SELECT FROM wadproject.blogs WHERE x = '"+ Integer.parseInt(rs2.getString("BLOG")) +"' )");
                     ResultSet rs3 = ps3.executeQuery();
                     likedBlogs.add(new Blog(rs3.getString("BLOGNAME"), rs3.getString("AUTHOR"), rs3.getString("BLOGTYPE"),
                         rs3.getString("PATH"), Boolean.parseBoolean(rs3.getString("PUBLIC"))));

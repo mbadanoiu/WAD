@@ -40,24 +40,32 @@ public class registrationController extends HttpServlet {
             clientDAO cd = clientDAO.getInstance();
             if(cd.userExists(request.getParameter("uname"))){
                 request.setAttribute("ufail", true);
-                RequestDispatcher rd = request.getRequestDispatcher("registration.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("jsp/registration.jsp");
+                rd.forward(request, response);
+            }
+            if(request.getParameter("country").equals("null")){
+                request.setAttribute("cfail", true);
+                RequestDispatcher rd = request.getRequestDispatcher("jsp/registration.jsp");
                 rd.forward(request, response);
             }
             else{
-                if(request.getParameter("password").equals(request.getParameter("rpassword"))) {
+                if(!request.getParameter("password").equals(request.getParameter("rpassword"))) {
                     request.setAttribute("pfail", true);
-                    RequestDispatcher rd = request.getRequestDispatcher("registration.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("jsp/registration.jsp");
                     rd.forward(request, response);
                 }
-                boolean spam=false;
-                if(request.getParameter("subscription").equals("on"))
-                    spam=true;
-                cd.addUser(request.getParameter("fname")+" "+request.getParameter("lname"), request.getParameter("uname"),
-                        request.getParameter("password"), request.getParameter("email"), request.getParameter("gender"),
-                        request.getParameter("usrtel"), request.getParameter("country"), spam);
-                request.setAttribute("rsuccess", true);
-                RequestDispatcher rd = request.getRequestDispatcher("registration.jsp");
-                rd.forward(request, response);
+                else{
+                    boolean spam=false;
+                    if(request.getParameter("subscription") != null)
+                        if(request.getParameter("subscription").equals("on"))
+                            spam=true;
+                    cd.addUser(request.getParameter("fname")+" "+request.getParameter("lname"), request.getParameter("uname"),
+                            request.getParameter("password"), request.getParameter("email"), request.getParameter("gender"),
+                            request.getParameter("usrtel"), request.getParameter("country"), spam);
+                    request.setAttribute("rsuccess", true);
+                    RequestDispatcher rd = request.getRequestDispatcher("jsp/registration.jsp");
+                    rd.forward(request, response);
+                }
             }
         }
     }

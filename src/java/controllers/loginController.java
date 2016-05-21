@@ -41,7 +41,7 @@ public class loginController extends HttpServlet {
             clientDAO cd = clientDAO.getInstance();
             if(!(cd.userExists(request.getParameter("Username")))){
                 request.setAttribute("fail", true);
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
                 rd.forward(request, response);
             }
             else{
@@ -50,11 +50,11 @@ public class loginController extends HttpServlet {
                 if(cd.passwordMatch(user, pass)){
                     request.getSession().setAttribute("user", user);
                     request.getSession().setAttribute("admin", cd.isAdmin(user));
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("jsp/index.jsp");
                 }
                 else{
                     request.setAttribute("fail", true);
-                    RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
                     rd.forward(request, response);
                 }
             }            
