@@ -12,6 +12,22 @@
         <servlet-name>registrationController</servlet-name>
         <servlet-class>controllers.registrationController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>xRegistrationController</servlet-name>
+        <servlet-class>controllers.xRegistrationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CTController</servlet-name>
+        <servlet-class>controllers.CTController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>login2Controller</servlet-name>
+        <servlet-class>controllers.login2Controller</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>createBlogController</servlet-name>
+        <servlet-class>controllers.createBlogController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -23,6 +39,22 @@
     <servlet-mapping>
         <servlet-name>registrationController</servlet-name>
         <url-pattern>/registrationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>xRegistrationController</servlet-name>
+        <url-pattern>/xRegistrationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CTController</servlet-name>
+        <url-pattern>/CTController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>login2Controller</servlet-name>
+        <url-pattern>/login2Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createBlogController</servlet-name>
+        <url-pattern>/createBlogController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

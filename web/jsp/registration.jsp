@@ -176,6 +176,7 @@
       }
 
     </style>
+    <title>Registration</title>
  </head>
  <body>
  <div id="header">
@@ -185,22 +186,27 @@
   <div id="header_layer2">
     <!-- Logo -->
     <div id="logo">
-      <img src="./smiley.png">
+        <img src="./images/smiley.png" alt="logo">
       </div>
     <div id="business_name">
       <span>WorthFit</span>
     </div>
-    <a href="gymfit.html"><div class="header_top last_header">Gym Packs</div></a>
-    <a href="blogfit.html"><div class="header_top">Blog</div></a>
-    <a href="registerfit.html"><div class="header_top">Register</div></a>
-    <a href="loginfit.html"><div class="header_top">Login</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
+    <a href="#"><div class="header_top">Register</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
     <!-- menu -->
   </div>
 </div>
 <Br>
 <!-- Service div -->
+<% if(request.getSession().getAttribute("user") != null) { %>
+    <font size="30"> How did you end up here? </font>
+<% } 
+else { %>
 <div class="content">
- <%--//////////////////////////////////////--%>
+    
+    <%--//////////////////////////////////////--%>
             <% Object temp = request.getAttribute("ufail");
                 if(temp != null)
                     if(Boolean.parseBoolean(temp.toString())) { %>
@@ -222,11 +228,11 @@
                     <font size="30" color="green"> Register Success: Client Registration Success </font>
                 <% } %>
     <%--//////////////////////////////////////--%>
+    
   <div class="formdiv">
     <div class="login_title">
       <span><b>Register</b></span>
-    </div><br><br>
-   
+    </div><br><br>  
     <form name="Form" method="POST" onsubmit="return validateForm()" action="http://localhost:8080/WADProject/registrationController">
       First Name:<br>
       <input type="text" name="fname" required><br>
@@ -239,14 +245,14 @@
       Repeat Password:<br>
       <input type="password" name="rpassword" required><br><br>
       Gender:
-      <input type="radio" name="gender" value="male"> Male
+      <input type="radio" name="gender" value="male" checked> Male
       <input type="radio" name="gender" value="female"> Female<br><br>
       Email:<br>
       <input type="email" name="email" required><br>
       Telephone:<br>
       <input type="tel" name="usrtel"><br><br>
       Country:
-        <select>
+      <select name="country">
           <option value="null">Select Country</option>
           <option value="romania">Romania</option>
           <option value="indonesia">Indonesia</option>
@@ -256,12 +262,14 @@
       Subscription:
       <input type="checkbox" name="subscription"><br><br>
       <input type="submit" value="Register">
-      <input type="reset" name="reset">
+      <input type="reset" value="Reset">
     </form> 
 
   </div>
 </div>
 
+    <% } %>
+    
 <div id="footer">
   
   <div class="Links">
@@ -283,7 +291,6 @@
     </div>
   </div>
 </div>
-
 
 </body>
 </html>

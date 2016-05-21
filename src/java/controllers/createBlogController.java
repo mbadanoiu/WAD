@@ -7,24 +7,22 @@
 package controllers;
 
 import daos.blogDAO;
-import daos.clientDAO;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utils.Hash;
 
 /**
  *
  * @author Savanutul
  */
-public class loginController extends HttpServlet {
+public class createBlogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,31 +34,17 @@ public class loginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException, SQLException, FileNotFoundException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            clientDAO cd = clientDAO.getInstance();
-            if(!(cd.userExists(request.getParameter("Username")))){
-                request.setAttribute("fail", true);
-                RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
-                rd.forward(request, response);
-            }
-            else{
-                String user = request.getParameter("Username");
-                String pass = request.getParameter("Password");
-                if(cd.passwordMatch(user, pass)){
-                    request.getSession().setAttribute("user", user);
-                    request.getSession().setAttribute("admin", cd.isAdmin(user));
-                    blogDAO bd = blogDAO.getInstance();
-                    request.getServletContext().setAttribute("blogs", bd.getAllBlogs());
-                    response.sendRedirect("jsp/index.jsp");
-                }
-                else{
-                    request.setAttribute("fail", true);
-                    RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
-                    rd.forward(request, response);
-                }
-            }            
+            boolean pub = false;
+            if(request.getParameter("Public") != null)
+                if(request.getParameter("Public").equals("on"))
+                            pub=true;
+            blogDAO bd = blogDAO.getInstance();
+            bd.addBlog(request.getParameter("BlogName"), request.getSession().getAttribute("user").toString(),
+                    request.getParameter("BlogType"), pub, request.getParameter("Content"));
+            response.sendRedirect("/jsp/profile.jsp");
         }
     }
 
@@ -72,16 +56,17 @@ public class loginController extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.io.FileNotFoundException
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, FileNotFoundException {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(createBlogController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(createBlogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -92,16 +77,17 @@ public class loginController extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.io.FileNotFoundException
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, FileNotFoundException {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(createBlogController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(createBlogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

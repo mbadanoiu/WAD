@@ -214,7 +214,7 @@
   	}
 
 	</style>
-
+        <title>WorthFit</title>
 	</head>
 
 <body>
@@ -226,15 +226,22 @@
 
 	<div id="header_layer2">
 		<div id="logo">
-			<img src="./smiley.png">
+                    <img src="http://localhost:8080/WADProject/jsp/images/smiley.png" alt="logo">
 		</div>
 		<div id="business_name">
 			<div>WorthFit</div>
 		</div>
-		<a href="gympacks.html"><div class="header_top last_header">Gym Packs</div></a>
-		<a href="blogs.jsp"><div class="header_top">Blog</div></a>
-		<a href="registration.html"><div class="header_top">Register</div></a>
-		<a href="login.jsp"><div class="header_top">Login</div></a>		
+		<a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
+		<a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
+                <% Object user = request.getSession().getAttribute("user");
+                        if(user == null) { %>
+		<a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
+		<a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
+                        <% } 
+                        else { %>
+                <a href="http://localhost:8080/WADProject/jsp/profile.jsp"><div class="header_top">Profile</div></a>
+		<a href="http://localhost:8080/WADProject/jsp/createBlog.jsp"><div class="header_top">Create Blog</div></a>
+                        <% } %>
 		<!-- menu -->
 	</div>
 </div>
@@ -246,16 +253,16 @@
 			<div class="blog_title">
 				<h2>Blog</h2>
 			</div>
-			<a href="blogs.html"><div class="image">
-				<img src="blog.png" class="img-rounded" alt="welcome" width="304" height="170">
+			<a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="image">
+				<img src="http://localhost:8080/WADProject/jsp/images/blog.png" class="img-rounded" alt="blogs" width="304" height="170">
 			</div></a>
 		</div>
 		<div class="gym_button">
 			<div class="gym_title">
 				<h2>Gym Packages</h2>
 			</div>
-			<a href="gympacks.html"><div class="image">
-				<img src="fitlog.png" class="img-rounded" alt="welcome" width="304" height="170">
+			<a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="image">
+				<img src="http://localhost:8080/WADProject/jsp/images/fitlog.png" class="img-rounded" alt="packs" width="304" height="170">
 			</div></a>
 		</div>
 	</div>

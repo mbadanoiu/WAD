@@ -24,7 +24,7 @@ import utils.Hash;
  *
  * @author Savanutul
  */
-public class loginController extends HttpServlet {
+public class login2Controller extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +42,7 @@ public class loginController extends HttpServlet {
             clientDAO cd = clientDAO.getInstance();
             if(!(cd.userExists(request.getParameter("Username")))){
                 request.setAttribute("fail", true);
-                RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("jsp/logOrRegister.jsp");
                 rd.forward(request, response);
             }
             else{
@@ -53,11 +53,14 @@ public class loginController extends HttpServlet {
                     request.getSession().setAttribute("admin", cd.isAdmin(user));
                     blogDAO bd = blogDAO.getInstance();
                     request.getServletContext().setAttribute("blogs", bd.getAllBlogs());
-                    response.sendRedirect("jsp/index.jsp");
+                    if(cd.hasCard(user))
+                        response.sendRedirect("jsp/gymPackages.jsp");
+                    else
+                        response.sendRedirect("jsp/cardAndTel.jsp");
                 }
                 else{
                     request.setAttribute("fail", true);
-                    RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("jsp/logOrRegister.jsp");
                     rd.forward(request, response);
                 }
             }            

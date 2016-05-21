@@ -53,7 +53,7 @@ public class GymPackage {
         return description;
     }
 
-    public BufferedImage getImagePath() {
+    public BufferedImage getImage() {
         return image;
     }
     

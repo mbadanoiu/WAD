@@ -57,9 +57,9 @@ public class blogDAO {
     public void addBlog(String name, String author, String type, boolean isPublic, String rawInput) throws SQLException, FileNotFoundException, ClassNotFoundException{
         connection=dbConnection.getConnection();
         try {
-            String path= "./"+UUID.randomUUID().toString().replace("-","")+".jps";
+            String path= "./createdjsp/"+UUID.randomUUID().toString().replace("-","")+".jps";
             while(blogExists(path))
-                path = "./cretedjsp/"+UUID.randomUUID().toString().replace("-","")+".jps";
+                path = "./createdjsp/"+UUID.randomUUID().toString().replace("-","")+".jps";
             if(CreateJSP.createJSP(path, CreateJSP.createContent(name, rawInput))){
                 PreparedStatement ps = connection.prepareStatement("INSERT INTO wadproject.blogs (BLOGNAME, AUTHOR, BLOGTYPE, PATH, PUBLIC)"
                         + " VALUES('"+name+"', '"+author+"', '"+type+"', '"+path+"', "+isPublic+")");

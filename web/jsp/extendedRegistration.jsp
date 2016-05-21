@@ -2,11 +2,11 @@
  <head>
  <style>
       /* BODY & GENERAL RULES */
-        body{  
+        body{ 
           background-color: #FFFFF0;
-          margin: 0px;
-          font-family: "Arial";
-          min-width: 1280px;
+            margin: 0px;
+            font-family: "Arial";
+            min-width: 1280px;
         }
 
       /* HEADER RULES */
@@ -21,8 +21,8 @@
         
         .header_top{
           background-color: #CCFF33;
-          font-size: 11px;
-          color:#20B2AA;
+            font-size: 11px;
+            color:#20B2AA;
           border-radius: 9px;
           width: 80px;
           height: 14px;
@@ -47,13 +47,13 @@
         #header_layer1{
           width: 100%;
           height: 12px;
-          padding:0px;
-          margin: 0px;
-          padding-top: 4px;
-          padding-bottom: 10px;
-          margin-right: 3%;
-          background-color: #FFFFF0;
-          min-width: 1280px;
+            padding:0px;
+            margin: 0px;
+            padding-top: 4px;
+            padding-bottom: 10px;
+            margin-right: 3%;
+            background-color: #FFFFF0;
+            min-width: 1280px;
         }
         #header_layer2{
           background-color: #20B2AA;
@@ -102,11 +102,10 @@
 
       .formdiv{
         height:541px;
-        width:200px;
+        width:300px;
         margin-left:auto;
         margin-right: auto;
       }
-
       #footer{
         margin-top: 50px;
         background-color: #20B2AA;
@@ -162,13 +161,14 @@
           color: #78B3EF;
         
       }
-      
+
       img {
           vertical-align: middle;
 
       }
+      
       .login_title{
-        width: 80px;
+        width: 200px;
         margin-right: auto;
         margin-left: auto;
         color:black;
@@ -176,13 +176,13 @@
       }
 
     </style>
-    <title>Login</title>
+    <title>Registration</title>
  </head>
  <body>
  <div id="header">
   <div id="header_layer1">
   </div>
-
+ 
   <div id="header_layer2">
     <!-- Logo -->
     <div id="logo">
@@ -193,31 +193,79 @@
     </div>
     <a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
     <a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
-    <a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
-    <a href="#"><div class="header_top">Login</div></a>
+    <a href="#"><div class="header_top">Register</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/logOrRegister.jsp"><div class="header_top">Login</div></a>
     <!-- menu -->
   </div>
 </div>
 <Br>
 <!-- Service div -->
 <div class="content">
-  <div class="login_title">
-  <span><b>Login</b></span>
-  </div><br><br>
-  <%-- ///////////////////////////////// --%>
-  <% Object temp = request.getAttribute("fail");
+    
+    <%--//////////////////////////////////////--%>
+            <% Object temp = request.getAttribute("ufail");
                 if(temp != null)
                     if(Boolean.parseBoolean(temp.toString())) { %>
-                    <font size="20" color="red"> Login Fail: Username or Password Mismatch </font>
-            <% } %>
-  <%-- ///////////////////////////////// --%>
+                    <font size="30" color="red"> Registration Fail: Username Already Exists </font>
+                <% } %>
+            <% temp = request.getAttribute("cfail");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
+                    <font size="30" color="red"> Registration Fail: A Valid Country Must Be Selected </font>
+                <% } %>
+            <% temp = request.getAttribute("pfail");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
+                    <font size="30" color="red"> Registration Fail: Password Repeat Mismatches Password </font>
+                <% } %>
+            <% temp = request.getAttribute("credfail");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
+                    <font size="30" color="red"> Registration Fail : Credit Card Number Must Not be Empty</font>
+                <% } %>
+            <% temp = request.getAttribute("rsuccess");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
+                    <font size="30" color="green"> Register Success: Client Registration Success </font>
+                <% } %>
+    <%--//////////////////////////////////////--%>
+    
   <div class="formdiv">
-      <form name="Form" method="POST" <%--onsubmit="return validateLogin()" optional asta daca vrei sa filtrezi characterele speciale--%> action="http://localhost:8080/WADProject/loginController">
+    <div class="login_title">
+      <span><b>Register</b></span>
+    </div><br><br>  
+    <form name="Form" method="POST" onsubmit="return validateForm()" action="http://localhost:8080/WADProject/xRegistrationController">
+      First Name:<br>
+      <input type="text" name="fname" required><br>
+      Last Name:<br>
+      <input type="text" name="lname" required><br>
       Username:<br>
-      <input type="text" name="Username"><br>
+      <input type="text" name="uname" required><br>
       Password:<br>
-      <input type="password" name="Password"><br><br>
-      <input type="submit" value="Login">
+      <input type="password" name="password" required><br>
+      Repeat Password:<br>
+      <input type="password" name="rpassword" required><br><br>
+      Gender:
+      <input type="radio" name="gender" value="male" checked> Male
+      <input type="radio" name="gender" value="female"> Female<br><br>
+      Email:<br>
+      <input type="email" name="email" required><br>
+      Credit Card Number:<br>
+      <input type="text" name="creditcard" required><br>
+      Telephone:<br>
+      <input type="tel" name="usrtel"><br><br>
+      Country:
+      <select name="country">
+          <option value="null">Select Country</option>
+          <option value="romania">Romania</option>
+          <option value="indonesia">Indonesia</option>
+          <option value="france">France</option>
+          <option value="newzealand">New Zealand</option>
+        </select> <br><br>
+      Subscription:
+      <input type="checkbox" name="subscription"><br><br>
+      <input type="submit" value="Register">
+      <input type="reset" value="Reset">
     </form> 
 
   </div>

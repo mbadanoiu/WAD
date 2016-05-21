@@ -6,7 +6,6 @@
 
 package controllers;
 
-import daos.blogDAO;
 import daos.clientDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,13 +17,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utils.Hash;
 
 /**
  *
  * @author Savanutul
  */
-public class loginController extends HttpServlet {
+public class xRegistrationController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,31 +34,45 @@ public class loginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             clientDAO cd = clientDAO.getInstance();
-            if(!(cd.userExists(request.getParameter("Username")))){
-                request.setAttribute("fail", true);
-                RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
+            if(cd.userExists(request.getParameter("uname"))){
+                request.setAttribute("ufail", true);
+                RequestDispatcher rd = request.getRequestDispatcher("jsp/extendedRegistration.jsp");
+                rd.forward(request, response);
+            }
+            if(request.getParameter("country").equals("null")){
+                request.setAttribute("cfail", true);
+                RequestDispatcher rd = request.getRequestDispatcher("jsp/extendedRegistration.jsp");
+                rd.forward(request, response);
+            }
+            String cc = request.getParameter("creditcard").trim();
+            if(cc.isEmpty()){
+                request.setAttribute("credfail", true);
+                RequestDispatcher rd = request.getRequestDispatcher("jsp/extendedRegistration.jsp");
                 rd.forward(request, response);
             }
             else{
-                String user = request.getParameter("Username");
-                String pass = request.getParameter("Password");
-                if(cd.passwordMatch(user, pass)){
-                    request.getSession().setAttribute("user", user);
-                    request.getSession().setAttribute("admin", cd.isAdmin(user));
-                    blogDAO bd = blogDAO.getInstance();
-                    request.getServletContext().setAttribute("blogs", bd.getAllBlogs());
-                    response.sendRedirect("jsp/index.jsp");
-                }
-                else{
-                    request.setAttribute("fail", true);
-                    RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
+                if(!request.getParameter("password").equals(request.getParameter("rpassword"))) {
+                    request.setAttribute("pfail", true);
+                    RequestDispatcher rd = request.getRequestDispatcher("jsp/extendedRegistration.jsp");
                     rd.forward(request, response);
                 }
-            }            
+                else{
+                    boolean spam=false;
+                    if(request.getParameter("subscription") != null)
+                        if(request.getParameter("subscription").equals("on"))
+                            spam=true;
+                    cd.addUser(request.getParameter("fname")+" "+request.getParameter("lname"), request.getParameter("uname"),
+                            request.getParameter("password"), request.getParameter("email"), request.getParameter("gender"),
+                            request.getParameter("usrtel"), request.getParameter("country"), spam, cc);
+                    request.setAttribute("rsuccess", true);
+                    RequestDispatcher rd = request.getRequestDispatcher("jsp/extendedRegistration.jsp");
+                    rd.forward(request, response);
+                }
+            }
         }
     }
 
@@ -78,10 +90,10 @@ public class loginController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(registrationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(registrationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -98,10 +110,10 @@ public class loginController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(registrationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(registrationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

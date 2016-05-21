@@ -133,4 +133,66 @@ public class clientDAO {
         }        
         return false;
     }
+    
+    public void addCard(String uname, String tel, String creditCard) throws SQLException{
+        connection=dbConnection.getConnection();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.clients");
+            ResultSet rs = ps.executeQuery();
+            Client c = null;
+            while (rs.next()) {
+                if((rs.getString("USERNAME")).equals(uname)){
+                    c = new Client(rs.getString("VIEWNAME"), rs.getString("USERNAME"), rs.getString("EMAIL"),
+                    rs.getString("GENDER"), rs.getString("TELEPHONE"), rs.getString("COUNTRY"),
+                            Boolean.parseBoolean(rs.getString("SUBSCRIBED"))); 
+                }
+            }
+            if(c != null){
+                try {
+                    creditCard=AES.encrypt(c, creditCard);
+                } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchProviderException | UnsupportedEncodingException ex) {
+                    Logger.getLogger(clientDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    creditCard=null;
+                }
+                PreparedStatement ps2;
+                if(c.getTel().isEmpty() || !c.getTel().equals(tel)){
+                    ps2 = connection.prepareStatement("INSERT INTO wadproject.clients (TELEPHONE, CREDITCARD)" 
+                            + " VALUES('"+tel+"', '"+ creditCard +"')"
+                            + " WHERE USERNAME = '"+ uname +"' ");
+                }
+                else{
+                    ps2 = connection.prepareStatement("INSERT INTO wadproject.clients (CREDITCARD)" 
+                            + " VALUES('"+ creditCard +"')"
+                            + " WHERE USERNAME = '"+ uname +"' ");
+                }
+                ps2.executeUpdate();
+                ps2.close();
+            }
+            ps.close();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public boolean hasCard(String username) throws ClassNotFoundException, SQLException {
+        connection=dbConnection.getConnection();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.clients");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if((rs.getString("USERNAME")).equals(username)){
+                    if(rs.getString("CREDITCARD") != null){
+                        ps.close();
+                        return true;
+                    }
+                }
+            }
+            ps.close();
+        } 
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }        
+        return false;
+    }
 }

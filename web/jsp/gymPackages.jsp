@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="models.GymPackage"%>
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <html lang="en-US">
@@ -182,6 +184,7 @@
 			}
 		
 		</style>
+                <title>Gym Packs</title>
 	</head>
 <body>
 
@@ -192,15 +195,22 @@
 
 	<div id="header_layer2">
 		<div id="logo">
-			<img src="./smiley.png">
+			<img src="./images/smiley.png" alt="logo">
 		</div>
 		<div id="business_name">
 			<span>WorthFit</span>
 		</div>
-		<a href="gympacks.html"><div class="header_top last_header">Gym Packs</div></a>
-		<a href="blogs.jsp"><div class="header_top">Blog</div></a>
-		<a href="registration.html"><div class="header_top">Register</div></a>
-		<a href="login.jsp"><div class="header_top">Login</div></a>
+		<a href="#"><div class="header_top last_header">Gym Packs</div></a>
+		<a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
+		<% Object user = request.getSession().getAttribute("user");
+                        if(user == null) { %>
+		<a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
+		<a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
+                        <% } 
+                        else { %>
+                <a href="http://localhost:8080/WADProject/jsp/profile.jsp"><div class="header_top">Profile</div></a>
+		<a href="http://localhost:8080/WADProject/jsp/createBlog.jsp"><div class="header_top">Create Blog</div></a>
+                        <% } %>
 		
 	</div>
 </div>
@@ -209,24 +219,28 @@
 <div class="content">
 	<div class="free_packs">
 		<h4><b>Free packs</b></h4>
+        <% ArrayList<GymPackage> packs = (ArrayList<GymPackage>) request.getServletContext().getAttribute("packages");
+        if(packs != null){
+            if(!packs.isEmpty())
+                for(GymPackage p : packs) { %>
 	</div><br>
 	<div class="firstpack">
+            <img src=" <% out.print(p.getImage()); %> " alt="Java Buffer Image error"/>
+            Name: <% out.print(p.getName()); %> <br/>
+            Price: <% out.print(p.getPrice()); %> <br/>
+            Gym: <% out.print(p.getGymName()); %> <br/>
+            Type: <% out.print(p.getType()); %> <br/>
+            <% String description = p.getDescription();
+                if(description != null)
+                    if(!description.isEmpty()) { %>
+            Description: <% out.print(description); %>
+                    <% } %>
 	</div>
-	<div class="secondpack">
-	</div>
-	<div class="thirdpack">
-	</div><br><br>
-	<div class="login_pack">
-		<h4><b>Enthusiastic's pack</b></h4>
-		<h6>Register and Login for more packages, if you want to join a harder fitness routine!</h6>
-	</div><br>
-	<div class="firstpack">
-	</div>
-	<div class="secondpack">
-	</div>
-	<div class="thirdpack">
-	</div><br><br>
-	
+	<% }
+        }
+        else { %>
+            <font size="30"> We are Experiencing Technical Difficulties with the Gym Packages Database. Please Come Back Later <font>
+        <%}%>
 </div>
 
 <div id="footer">

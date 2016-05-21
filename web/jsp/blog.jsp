@@ -1,3 +1,5 @@
+<%@page import="models.Blog"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <html lang="en-US">
@@ -181,6 +183,7 @@
 			}
 		
 		</style>
+                <title>Blogs</title>
 	</head>
 <body>
 
@@ -191,15 +194,18 @@
 
 	<div id="header_layer2">
 		<div id="logo">
-			<img src="./smiley.png">
+			<img src="./images/smiley.png" alt="logo">
 		</div>
 		<div id="business_name">
 			<span>WorthFit</span>
 		</div>
-		<a href="gympacks.html"><div class="header_top last_header">Gym Packs</div></a>
-		<a href="blogs.jsp"><div class="header_top">Blog</div></a>
-		<a href="registration.html"><div class="header_top">Register</div></a>
-		<a href="login.jsp"><div class="header_top">Login</div></a>
+		<a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
+		<a href="#"><div class="header_top">Blog</div></a>
+                    <% Object user = request.getSession().getAttribute("user");
+                        if(user == null) {%>
+		<a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
+		<a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
+                        <% } %>
 		
 	</div>
 </div>
@@ -207,25 +213,33 @@
 >
 <div class="content">
 	<div class="free_blogs">
-		<h4><b>Free blogs</b></h4>
+            <% if(user == null) {%>
+		<h4><b>Public blogs</b></h4>
+            <% } 
+            else { %>
+                <h4><b>Blogs</b></h4>
+            <% } %>
 	</div><br>
-	<div class="firstblog">
-	</div>
-	<div class="secondblog">
-	</div>
-	<div class="thirdblog">
-	</div><br><br>
+        <% ArrayList<Blog> blogs = (ArrayList<Blog>) request.getServletContext().getAttribute("blogs");
+        if(blogs != null){
+            if(!blogs.isEmpty())
+                for(Blog b : blogs) { %>
+                <div class="firstblog">
+                    <a href=" <% out.print(b.getPath()); %> "> <% out.print(b.getName()); %> </a> <br/>
+                    Author: <% out.print(b.getAuthor()); %> <br/>
+                    Type: <% out.print(b.getType()); %> <br/>
+                </div>
+                    <% }
+            }
+            else { %>
+                <font size="30" color="#20B2AA"> We are Experiencing Technical Difficulties with the Blog Database. Please Come Back Later <font>
+                <%}%>
+	<div><br/>
 	<div class="login_blogs">
+            <% if(user == null) {%>
 		<h4><b>Enthusiastic's blogs</b></h4>
 		<h6>Register and Login for more blogs, if you want to know more about the fitness world!</h6>
-	</div><br>
-	<div class="firstblog">
-	</div>
-	<div class="secondblog">
-	</div>
-	<div class="thirdblog">
-	</div><br><br>
-
+        <% } %>
 	
 </div>
 

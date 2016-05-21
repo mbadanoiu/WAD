@@ -193,36 +193,54 @@
     </div>
     <a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
     <a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
+    <% Object user = request.getSession().getAttribute("user");
+                        if(user == null) { %>
     <a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
-    <a href="#"><div class="header_top">Login</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
+                        <% } 
+                        else { %>
+    <a href="http://localhost:8080/WADProject/jsp/profile.jsp"><div class="header_top">Profile</div></a>
+                        <% } %>
     <!-- menu -->
   </div>
 </div>
 <Br>
 <!-- Service div -->
 <div class="content">
+    <% if(user == null) { %>
+        <font size="30"> What are you even doing here? </font>
+        <%}
+    else { %>
   <div class="login_title">
   <span><b>Login</b></span>
   </div><br><br>
-  <%-- ///////////////////////////////// --%>
-  <% Object temp = request.getAttribute("fail");
+  
+        <font size="20" color="black">  Purchase Fail: In Order To Purchase Packs You Need to Submit 
+        Your Credit Card Number and Input a Valid Telephone Number in Order For Us to Contact You</font>
+  
+        <% Object temp = request.getAttribute("tfail");
                 if(temp != null)
                     if(Boolean.parseBoolean(temp.toString())) { %>
-                    <font size="20" color="red"> Login Fail: Username or Password Mismatch </font>
-            <% } %>
-  <%-- ///////////////////////////////// --%>
+                    <font size="30" color="red"> Invalid Telephone </font>
+                <% } %>
+            <% temp = request.getAttribute("credfail");
+                if(temp != null)
+                    if(Boolean.parseBoolean(temp.toString())) { %>
+                    <font size="30" color="red"> Invalid Credit Card Number </font>
+                <% } %>
+        
   <div class="formdiv">
-      <form name="Form" method="POST" <%--onsubmit="return validateLogin()" optional asta daca vrei sa filtrezi characterele speciale--%> action="http://localhost:8080/WADProject/loginController">
-      Username:<br>
-      <input type="text" name="Username"><br>
-      Password:<br>
-      <input type="password" name="Password"><br><br>
-      <input type="submit" value="Login">
+      <form name="Form" method="POST"  action="http://localhost:8080/WADProject/CTController">
+      Telephone:<br>
+      <input type="tel" name="Telephone" required><br>
+      Credit Card Number:<br>
+      <input type="text" name="CreditCard" required><br><br>
+      <input type="submit" value="Submit">
     </form> 
 
   </div>
 </div>
-
+                <% } %>
 <div id="footer">
   
   <div class="Links">

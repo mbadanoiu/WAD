@@ -24,8 +24,6 @@ public class likedblogDAO {
     //can be seen in profile
     private Connection connection;
     private static likedblogDAO instance;
-    //telephone and card are optional
-    //card number is encrypted with AES, needs also to be decrypted when used
     public static likedblogDAO getInstance() {
         if (instance == null) {
             instance = new likedblogDAO();
@@ -104,6 +102,7 @@ public class likedblogDAO {
                 while(rs2.next()){
                     PreparedStatement ps3 = connection.prepareStatement("SELECT FROM wadproject.blogs WHERE x = '"+ Integer.parseInt(rs2.getString("BLOG")) +"' )");
                     ResultSet rs3 = ps3.executeQuery();
+                    rs3.next();
                     likedBlogs.add(new Blog(rs3.getString("BLOGNAME"), rs3.getString("AUTHOR"), rs3.getString("BLOGTYPE"),
                         rs3.getString("PATH"), Boolean.parseBoolean(rs3.getString("PUBLIC"))));
                     ps3.close();
