@@ -2,8 +2,7 @@
  <head>
  <style>
       /* BODY & GENERAL RULES */
-        body{
-          height: 800px;  
+        body{  
           background-color: #FFFFF0;
           margin: 0px;
           font-family: "Arial";
@@ -97,7 +96,6 @@
       .content{
         margin-top: 170px;
         width: 70%;
-        height:541px;
         margin-left:auto;
         margin-right: auto;
       }
@@ -187,8 +185,8 @@
   <div id="header_layer2">
     <!-- Logo -->
     <div id="logo">
-      <img src="./logofitness.png">
-      </div>
+      <img src="./smiley.png">
+    </div>
     <div id="business_name">
       <span>WorthFit</span>
     </div>
@@ -196,11 +194,11 @@
     <a href="http://localhost:8080/WADProject/jsp/blogfit.jsp"><div class="header_top">Blog</div></a>
     <a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
     <a href="#"><div class="header_top">Login</div></a>
-    <!-- menu -->
+    
   </div>
 </div>
 <Br>
-<!-- Service div -->
+
 <div class="content">
   <div class="login_title">
   <span><b>Login</b></span>
@@ -213,7 +211,7 @@
             <% } %>
   <%-- ///////////////////////////////// --%>
   <div class="formdiv">
-      <form name="Form" method="POST" <%--onsubmit="return validateLogin()" optional asta daca vrei sa filtrezi characterele speciale--%> action="http://localhost:8080/WADProject/loginController">
+   <form name="Form" method="POST" <%--onsubmit="return validateLogin()" optional asta daca vrei sa filtrezi characterele speciale--%> action="http://localhost:8080/WADProject/loginController">
       Username:<br>
       <input type="text" name="Username"><br>
       Password:<br>
