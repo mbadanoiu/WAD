@@ -65,7 +65,7 @@ public class gymPackageDAO {
             InputStream image = new FileInputStream(file);
             PreparedStatement ps = connection.prepareStatement("INSERT INTO wadproject.gympackages (PACKNAME, PACKTYPE, PRICE, GYMNAME, DESCRIPTION, IMAGE, AVAILABLE)"
                     + " VALUES('"+name+"', '"+type+"', "+price+", '"+gym+"', '"+description+"', ? ,"+available+")");
-            ps.setBinaryStream(6, image, (int) file.length()); ///////must be put as BLOB in pool
+            ps.setBinaryStream(1, image, (int) file.length()); ///////must be put as BLOB in pool
             ps.executeUpdate();
             ps.close();
         }
@@ -159,7 +159,7 @@ public class gymPackageDAO {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
             int rowsNo=0;
-            while (rs.next()){                
+            while(rs.next()){         
                 rowsNo++;
                 imgTemp.add(rs.getBlob("IMAGE"));
                 temp.add(rs.getString("PACKNAME"));

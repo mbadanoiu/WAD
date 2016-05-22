@@ -33,13 +33,13 @@ public class likedblogDAO {
     
     private likedblogDAO() {}
     
-    public void like(String user, String blogURL){
+    public void like(String user, String blog){
         connection=dbConnection.getConnection();
         try {
             PreparedStatement psU = connection.prepareStatement("SELECT * FROM wadproject.clients"+
-                                                                    "WHERE USERNAME='"+user+"' ");
+                                                                    " WHERE USERNAME='"+user+"' ");
             PreparedStatement psB = connection.prepareStatement("SELECT * FROM wadproject.blogs"+
-                                                                    "WHERE PATH='"+blogURL+"'");
+                                                                    " WHERE BLOGNAME='"+blog+"' ");
             ResultSet rsU = psU.executeQuery();
             ResultSet rsB = psB.executeQuery();
             rsU.next();
@@ -64,9 +64,9 @@ public class likedblogDAO {
         connection=dbConnection.getConnection();
         try {
             PreparedStatement psU = connection.prepareStatement("SELECT * FROM wadproject.clients"+
-                                                                    "WHERE USERNAME='"+ user +"' ");
+                                                                    " WHERE USERNAME='"+ user +"' ");
             PreparedStatement psB = connection.prepareStatement("SELECT * FROM wadproject.blogs"+
-                                                                    "WHERE PATH='"+ blogURL +"'");
+                                                                    " WHERE PATH='"+ blogURL +"' ");
             ResultSet rsU = psU.executeQuery();
             ResultSet rsB = psB.executeQuery();
             rsU.next();
@@ -92,15 +92,15 @@ public class likedblogDAO {
         connection=dbConnection.getConnection();
         try {
             PreparedStatement psU = connection.prepareStatement("SELECT * FROM wadproject.clients"+
-                                                                    "WHERE USERNAME= '"+user+"' ");
+                                                                    " WHERE USERNAME= '"+user+"' ");
             ResultSet rsU = psU.executeQuery();
             rsU.next();
             int u = rsU.getInt("x");
             if(u != 0){
-                PreparedStatement ps2 = connection.prepareStatement("SELECT FROM wadproject.likedblogs WHERE USER = '"+ u +"' )");
+                PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM wadproject.likedblogs WHERE USER = '"+ u +"' ");
                 ResultSet rs2 = ps2.executeQuery();
                 while(rs2.next()){
-                    PreparedStatement ps3 = connection.prepareStatement("SELECT FROM wadproject.blogs WHERE x = '"+ Integer.parseInt(rs2.getString("BLOG")) +"' )");
+                    PreparedStatement ps3 = connection.prepareStatement("SELECT * FROM wadproject.blogs WHERE x = '"+ Integer.parseInt(rs2.getString("BLOG")) +"' ");
                     ResultSet rs3 = ps3.executeQuery();
                     rs3.next();
                     likedBlogs.add(new Blog(rs3.getString("BLOGNAME"), rs3.getString("AUTHOR"), rs3.getString("BLOGTYPE"),

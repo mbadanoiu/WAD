@@ -122,8 +122,9 @@ public class clientDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 if((rs.getString("USERNAME")).equals(username)){
+                    boolean adm = rs.getBoolean("ADMIN"); 
                     ps.close();
-                    return rs.getBoolean("ADMIN");
+                    return adm;
                 }
             }
             ps.close();

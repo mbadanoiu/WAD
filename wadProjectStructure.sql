@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `wadproject` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `wadproject`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: wadproject
@@ -29,20 +27,11 @@ CREATE TABLE `blogs` (
   `BLOGNAME` varchar(45) NOT NULL,
   `AUTHOR` varchar(15) NOT NULL,
   `BLOGTYPE` varchar(40) NOT NULL,
-  `PATH` varchar(45) NOT NULL,
+  `PATH` varchar(100) NOT NULL,
   `PUBLIC` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`x`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `blogs`
---
-
-LOCK TABLES `blogs` WRITE;
-/*!40000 ALTER TABLE `blogs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `blogs` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `boughtpackages`
@@ -62,15 +51,6 @@ CREATE TABLE `boughtpackages` (
   CONSTRAINT `bpUKey` FOREIGN KEY (`USER`) REFERENCES `clients` (`x`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `boughtpackages`
---
-
-LOCK TABLES `boughtpackages` WRITE;
-/*!40000 ALTER TABLE `boughtpackages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `boughtpackages` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `clients`
@@ -93,18 +73,10 @@ CREATE TABLE `clients` (
   `SIGNUPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ADMIN` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`USERNAME`),
+  UNIQUE KEY `USERNAME_UNIQUE` (`USERNAME`),
   KEY `x` (`x`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `clients`
---
-
-LOCK TABLES `clients` WRITE;
-/*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clients` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `gympackages`
@@ -123,18 +95,10 @@ CREATE TABLE `gympackages` (
   `IMAGE` blob,
   `IMAGEPATH` varchar(50) DEFAULT NULL,
   `AVAILABLE` bit(1) DEFAULT NULL,
-  PRIMARY KEY (`x`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`x`),
+  UNIQUE KEY `PACKNAME_UNIQUE` (`PACKNAME`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gympackages`
---
-
-LOCK TABLES `gympackages` WRITE;
-/*!40000 ALTER TABLE `gympackages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gympackages` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `likedblogs`
@@ -152,17 +116,8 @@ CREATE TABLE `likedblogs` (
   KEY `UKey_idx` (`USER`),
   CONSTRAINT `lbBKey` FOREIGN KEY (`BLOG`) REFERENCES `blogs` (`x`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `lbUKey` FOREIGN KEY (`USER`) REFERENCES `clients` (`x`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `likedblogs`
---
-
-LOCK TABLES `likedblogs` WRITE;
-/*!40000 ALTER TABLE `likedblogs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `likedblogs` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -173,4 +128,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-20 22:23:47
+-- Dump completed on 2016-05-23  0:52:27

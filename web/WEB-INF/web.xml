@@ -32,6 +32,14 @@
         <servlet-name>buyController</servlet-name>
         <servlet-class>controllers.buyController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addPackController</servlet-name>
+        <servlet-class>controllers.addPackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>likeBlogController</servlet-name>
+        <servlet-class>controllers.likeBlogController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>buyController</servlet-name>
         <url-pattern>/buyController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addPackController</servlet-name>
+        <url-pattern>/addPackController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>likeBlogController</servlet-name>
+        <url-pattern>/likeBlogController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

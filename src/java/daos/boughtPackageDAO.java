@@ -41,9 +41,9 @@ public class boughtPackageDAO {
         connection=dbConnection.getConnection();
         try {
             PreparedStatement psU = connection.prepareStatement("SELECT * FROM wadproject.clients"+
-                                                                    "WHERE USERNAME='"+user+"' ");
+                                                                    " WHERE USERNAME='"+user+"' ");
             PreparedStatement psP = connection.prepareStatement("SELECT * FROM wadproject.gympackages"+
-                                                                    "WHERE PACKNAME='"+pack+"'");
+                                                                    " WHERE PACKNAME='"+pack+"' ");
             ResultSet rsU = psU.executeQuery();
             ResultSet rsP = psP.executeQuery();
             rsU.next();
@@ -69,15 +69,15 @@ public class boughtPackageDAO {
         connection=dbConnection.getConnection();
         try {
             PreparedStatement psU = connection.prepareStatement("SELECT * FROM wadproject.clients"+
-                                                                    "WHERE USERNAME= '"+user+"' ");
+                                                                    " WHERE USERNAME= '"+user+"' ");
             ResultSet rsU = psU.executeQuery();
             rsU.next();
             int u = rsU.getInt("x");
             if(u != 0){
-                PreparedStatement ps2 = connection.prepareStatement("SELECT FROM wadproject.boughtpackages WHERE USER = '"+ u +"' )");
+                PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM wadproject.boughtpackages WHERE USER = '"+ u +"' ");
                 ResultSet rs2 = ps2.executeQuery();
                 while(rs2.next()){
-                    PreparedStatement ps3 = connection.prepareStatement("SELECT FROM wadproject.gympackages WHERE x = '"+ Integer.parseInt(rs2.getString("BLOG")) +"' )");
+                    PreparedStatement ps3 = connection.prepareStatement("SELECT * FROM wadproject.gympackages WHERE x = '"+ Integer.parseInt(rs2.getString("BLOG")) +"' ");
                     ResultSet rs3 = ps3.executeQuery();
                     rs3.next();
                     Blob blob = rs3.getBlob("IMAGE");

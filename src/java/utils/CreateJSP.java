@@ -195,7 +195,7 @@ public class CreateJSP {
 "        color:black;\n" +
 "        font-size: 20px;\n" +
 "      }\n" +
-                            "    </style>"+
+                            "    </style>\n"+
                             "        <title>"+title+"</title>\n" +
                             "    </head>\n" +
                             "    <body>\n"+
@@ -205,7 +205,7 @@ public class CreateJSP {
                             "  <div id=\"header_layer2\">\n" +
                             "    <!-- Logo -->\n" +
                             "    <div id=\"logo\">\n" +
-                            "        <img src=\"./images/smiley.png\" alt=\"logo\">\n" +
+                            "        <img src=\"http://localhost:8080/WADProject/jsp/images/smiley.png\" alt=\"logo\">\n" +
                             "      </div>\n" +
                             "    <div id=\"business_name\">\n" +
                             "      <span>WorthFit</span>\n" +
@@ -218,9 +218,14 @@ public class CreateJSP {
                             "</div>\n" +
                             "<Br>\n" +
                             "<!-- Service div -->\n" +
-                            "<div class=\"content\">" +
+                            "<div class=\"content\">\n" +
+                            "<h2>"+title+"</h2>\n" +
                             input +
-                            "       </div>" +
+                            "\n</div>\n" +
+                            "<form method=\"POST\" action=\"http://localhost:8080/WADProject/likeBlogController\">\n" +
+                            "    <input type=\"hidden\" name=\"title\" value=\""+title+"\">\n" +
+                            "    <input type=\"submit\" value=\"Like\">\n" +
+                            "</form>\n"+
                             "<div id=\"footer\">\n" +
                             "  <div class=\"Links\">\n" +
                             "    <div class=\"footerDiv\">\n" +
@@ -236,7 +241,7 @@ public class CreateJSP {
                             "      <a href=\"list.html\"><div class=\"footerDetailSubtitle\">Trainers</div></a>\n" +
                             "    </div>\n" +
                             "  </div>\n" +
-                            "</div>" +
+                            "</div>\n" +
                             "    </body>\n" +
                             "</html>";
         return output;
@@ -249,7 +254,7 @@ public class CreateJSP {
            File f = new File(path);
 
            // tries to create new file in the system
-           bool =f.createNewFile(); //returns true is successful, else false
+           bool = f.createNewFile(); //returns true is successful, else false
            System.out.println("File created: "+bool);
            if(bool){
                 PrintWriter writer = new PrintWriter(f, "UTF-8");

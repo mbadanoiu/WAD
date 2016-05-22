@@ -25,7 +25,7 @@
           width: 100%;
           padding:0px;
           margin: 0px;
-          position: fixed;
+          //position: fixed;
           min-width: 1280px;
           z-index: 100;
         }
@@ -259,31 +259,36 @@
     <div id="header">
     <div id="header_layer1">
     <div class="sticky">
-        <span><b>Hello, user!</b></span>
+        <% Object user = request.getSession().getAttribute("user");
+            if(user != null) { %>
+        <span><b>Hello, <% out.print(user.toString()); %>!</b></span>
         <div class="logout">
-        <a href="http://localhost:8080/WADProject/controllers/logoutController.java">Logout</a>
+        <a href="http://localhost:8080/WADProject/logoutController">Logout</a>
         </div>
+        <% } %>
     </div>
     </div>
 
     <div id="header_layer2">
         <div id="logo">
-            <img src="./smiley.png">
+            <img src="http://localhost:8080/WADProject/jsp/images/smiley.png" alt="logo">
         </div>
         <div id="business_name">
             <div>WorthFit</div>
         </div>
-        <a href="gympacks.html"><div class="header_top last_header">Gym Packs</div></a>
-        <a href="blogs.jsp"><div class="header_top">Blog</div></a>
-        <a href="registration.html"><div class="header_top">Register</div></a>
-        <a href="login.jsp"><div class="header_top">Login</div></a>     
+        <a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
+        <a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
+        <% if(user != null) { %>
+        <a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
+        <a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
+        <% } %>
         
     </div>
 </div>
 <div class="content">
     <div class="blog_form"> 
         <div class="blog_title"><h1>Blog Creator</h1></div>
-        <% if(request.getSession().getAttribute("user") != null) { %>
+        <% if(user != null) { %>
         <div class="form_div">
             <form action="http://localhost:8080/WADProject/createBlogController" id="linker">
                 Blog Name: <input type="text" name="BlogName"> <br><br>

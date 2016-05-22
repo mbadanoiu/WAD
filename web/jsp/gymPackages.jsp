@@ -1,3 +1,4 @@
+<%@page import="daos.gymPackageDAO"%>
 <%@page import="daos.clientDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="models.GymPackage"%>
@@ -220,7 +221,8 @@
 <div class="content">
 	<div class="free_packs">
 		<h4><b>All packs</b></h4>
-        <% ArrayList<GymPackage> packs = (ArrayList<GymPackage>) request.getServletContext().getAttribute("packages");
+        <% gymPackageDAO gpd = gymPackageDAO.getInstance();
+        ArrayList<GymPackage> packs = gpd.getAllPackages();//(ArrayList<GymPackage>) request.getServletContext().getAttribute("packages");
         if(packs != null){
             if(!packs.isEmpty())
                 for(GymPackage p : packs) { %>
@@ -228,7 +230,7 @@
 	<div class="firstpack">
             <% clientDAO cd = clientDAO.getInstance();
                     if(user != null) {
-                        if(cd.hasCard(user.toString())) {%>
+                        if(cd.hasCard(user.toString())) { %>
             <form name="Form" method="POST" action="http://localhost:8080/WADProject/buyController">
                         <% } 
                         else { %>

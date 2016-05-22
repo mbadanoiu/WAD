@@ -57,10 +57,11 @@ public class blogDAO {
     public void addBlog(String name, String author, String type, boolean isPublic, String rawInput) throws SQLException, FileNotFoundException, ClassNotFoundException{
         connection=dbConnection.getConnection();
         try {
-            String path= "./createdjsp/"+UUID.randomUUID().toString().replace("-","")+".jps";
+            String path= "../createdjsp/"+UUID.randomUUID().toString().replace("-","")+".jsp"; //if push comes to shove C:\Users\Savanutul\Documents\NetBeansProjects\WADProject\web\createdjsp
             while(blogExists(path))
-                path = "./createdjsp/"+UUID.randomUUID().toString().replace("-","")+".jps";
-            if(CreateJSP.createJSP(path, CreateJSP.createContent(name, rawInput))){
+                path = "../createdjsp/"+UUID.randomUUID().toString().replace("-","")+".jsp";
+            if(CreateJSP.createJSP("C:\\Users\\Savanutul\\Documents\\NetBeansProjects\\WADProject\\web\\"+path.substring(2),
+                    CreateJSP.createContent(name, rawInput))){
                 PreparedStatement ps = connection.prepareStatement("INSERT INTO wadproject.blogs (BLOGNAME, AUTHOR, BLOGTYPE, PATH, PUBLIC)"
                         + " VALUES('"+name+"', '"+author+"', '"+type+"', '"+path+"', "+isPublic+")");
                 ps.executeUpdate();
@@ -192,5 +193,25 @@ public class blogDAO {
             ex.printStackTrace();
         }
         return blogs;
+    }
+    
+    public Blog getBlog(String blog) throws ClassNotFoundException, SQLException {
+        connection=dbConnection.getConnection();
+        Blog b = null;
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.blogs"+
+                                                                    " WHERE BLOGNAME= '"+blog+"' ");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                b = new Blog(rs.getString("BLOGNAME"), rs.getString("AUTHOR"), rs.getString("BLOGTYPE"),
+                        rs.getString("PATH"), rs.getBoolean("PUBLIC"));
+                ps.close();
+            }
+            ps.close();
+        } 
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }        
+        return b;
     }
 }

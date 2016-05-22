@@ -1,11 +1,8 @@
-<%@page import="daos.gymPackageDAO"%>
-<%@page import="models.GymPackage"%>
-<%@page import="daos.blogDAO"%>
-<%@page import="models.Blog"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="daos.likedblogDAO"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
- <head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <style>
       /* BODY & GENERAL RULES */
         body{  
@@ -180,156 +177,55 @@
         color:black;
         font-size: 20px;
       }
-      
-      #writtenBlogs,
-      #likedBlogs,
-      #purchedPacks {
-				color: #20B2AA;
-				font-size: 22px;
-			}
-       .firstblog {
-        width: 500px;
-        height: 200px;
-        background-color: palegreen;
-        margin-bottom: 20px;
-      }
-
-    </style>
-    <title>Login</title>
- </head>
- <body>
- <div id="header">
+    </style>        <title>Power Building</title>
+    </head>
+    <body>
+<div id="header">
   <div id="header_layer1">
   </div>
-
   <div id="header_layer2">
     <!-- Logo -->
     <div id="logo">
-        <img src="./images/smiley.png" alt="logo">
+        <img src="http://localhost:8080/WADProject/jsp/images/smiley.png" alt="logo">
       </div>
     <div id="business_name">
       <span>WorthFit</span>
     </div>
-    <a href="http://localhost:8080/WADProject/jsp/index.jsp"><div class="header_top last_header">Home</div></a>
     <a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
-    <% Object user = request.getSession().getAttribute("user");
-       boolean admin = false;
-        if(user != null) { 
-            if(request.getSession().getAttribute("admin") != null)
-                admin=Boolean.parseBoolean(request.getSession().getAttribute("admin").toString()); %>
     <a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
     <a href="http://localhost:8080/WADProject/jsp/createBlog.jsp"><div class="header_top">Create Blog</div></a>
-            <% if(admin) { %>
-    <a href="http://localhost:8080/WADProject/jsp/addPack.jsp"><div class="header_top">Add Gym Packages</div></a>
     <!-- menu -->
-            <% }
-        } %>
   </div>
 </div>
 <Br>
 <!-- Service div -->
 <div class="content">
-  <%-- ///////////////////////////////// --%>
-  <% if(user != null) { %>
-                <h4> <% if(admin) out.print("Admin "); %> <% out.print(user.toString()); %>'s Profile </h4>
-            
-  <% if(admin) { %>
-    <a href="http://localhost:8080/WADProject/jsp/addPack.jsp"> Add Gym Packages </a>
-  <% } %>
-  
-  <div id="likedBlogs"> 
-      <% likedblogDAO lbd = likedblogDAO.getInstance();
-        ArrayList<Blog> blogs = lbd.getLikedBlogs(user.toString());
-        if(blogs != null){
-            if(!blogs.isEmpty())
-                for(Blog b : blogs) { %>
-                <div class="firstblog">
-                    <a href=" <% out.print(b.getPath()); %> "> <% out.print(b.getName()); %> </a> <br/>
-                    Author: <% out.print(b.getAuthor()); %> <br/>
-                    Type: <% out.print(b.getType()); %> <br/>
-                </div>
-                    <% }
-            }
-            else { %>
-                <font size="30" color="#20B2AA"> We are Experiencing Technical Difficulties with the Blog Database. Please Come Back Later </font>
-                <% } %>
-  </div><br/><br/>
-  <div id="writtenBlogs"> 
-      <% blogDAO bd = blogDAO.getInstance();
-        blogs = bd.getUserBlogs(user.toString());
-        if(blogs != null){
-            if(!blogs.isEmpty()){
-                for(Blog b : blogs) { %>
-                <div class="firstblog">
-                    <a href=" <% out.print(b.getPath()); %> "> <% out.print(b.getName()); %> </a> <br/>
-                    Author: <% out.print(b.getAuthor()); %> <br/>
-                    Type: <% out.print(b.getType()); %> <br/>
-                </div>
-                    <% }
-            }
-            else { %>
-                <font size="30" color="#20B2AA"> You didn't like a blog yet, hope something catches your eye. </font>
-            <% }
-        }
-        else { %>
-                <font size="30" color="#20B2AA"> We are Experiencing Technical Difficulties with the Blog Database. Please Come Back Later </font>
-                <% } %>
-  </div><br/><br/>
-  <div id="purchedPacks">
-      <%gymPackageDAO gpd = gymPackageDAO.getInstance();
-        ArrayList<GymPackage> packs = gpd.getAllPackages();//(ArrayList<GymPackage>) request.getServletContext().getAttribute("packages");
-        if(packs != null){
-            if(!packs.isEmpty()) {
-                for(GymPackage p : packs) { %>
-  <img src=" <% out.print(p.getImage()); %> " alt="Java Buffer Image error"/>
-            Name: <% out.print(p.getName()); %> <br/>
-            Price: <% out.print(p.getPrice()); %> <br/>
-            Gym: <% out.print(p.getGymName()); %> <br/>
-            Type: <% out.print(p.getType()); %> <br/>
-            <% String description = p.getDescription();
-                if(description != null)
-                    if(!description.isEmpty()) { %>
-            Description: <% out.print(description); %>
-                    <% } 
-                }
-            }
-            else { %>
-                <h4>Seems you have yet to purchase a gym pack from us. Happy fitness, and hope you sponsor us soon. </h4>
-            <% }
-        }
-        else { %>
-            <h4> We are Experiencing Technical Difficulties with the Gym Packages Database. Please Come Back Later </h4>
-        <% } %>
-  </div>
-  <%-- ///////////////////////////////// --%>
-  
+    <h2>Power Building</h2>
+Most Hardcore blog post you will ever read.
+Guaranteed.
+No mistake.
+What are you still doing here?
+Go lift.
+Does thou even ascend objects of considerable mass?       
 </div>
-  <% } 
-  else { %>
-    <font size="30"> You seem to be in a hurry to get here </font>
-  <% } %>
-
+<form method="POST" action="http://localhost:8080/WADProject/likeBlogController">
+    <input type="hidden" name="title" value="Power Building">
+    <input type="submit" value="Like">
+</form>
 <div id="footer">
-  
   <div class="Links">
-  
     <div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
       <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
-
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Join Us</div></a>
       <a href="programs.html"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
-
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Prices</div></a>
       <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
-      
     </div>
   </div>
-</div>
-
-</body>
+</div>    </body>
 </html>

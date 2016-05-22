@@ -42,7 +42,7 @@ public class logoutController extends HttpServlet {
             blogDAO bd = blogDAO.getInstance();
             request.getServletContext().setAttribute("blogs", bd.getPublicBlogs());
             //request.getSession().setAttribute("blogs", getPublicBlogs());
-            response.sendRedirect("loginJSP.jsp");
+            response.sendRedirect("jsp/login.jsp");
         }
     }
 

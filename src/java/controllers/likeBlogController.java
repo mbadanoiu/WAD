@@ -7,7 +7,7 @@
 package controllers;
 
 import daos.blogDAO;
-import java.io.FileNotFoundException;
+import daos.likedblogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Savanutul
  */
-public class createBlogController extends HttpServlet {
+public class likeBlogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,24 +32,22 @@ public class createBlogController extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, FileNotFoundException, ClassNotFoundException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            boolean pub = false;
-            if(request.getParameter("Public") != null)
-                if(request.getParameter("Public").equals("on"))
-                            pub=true;
+            likedblogDAO lbd = likedblogDAO.getInstance();
+            String blog = request.getParameter("title");
+            Object user = request.getSession().getAttribute("user");
             blogDAO bd = blogDAO.getInstance();
-            bd.addBlog(request.getParameter("BlogName"), request.getSession().getAttribute("user").toString(),
-                    request.getParameter("BlogType"), pub, request.getParameter("Content"));
-            if(request.getSession().getAttribute("user") != null)
-                request.getServletContext().setAttribute("blogs", bd.getAllBlogs());
-            else
-                if(pub)
-                    request.getServletContext().setAttribute("blogs", bd.getPublicBlogs());
-            response.sendRedirect("jsp/profile.jsp");
+            String path = bd.getBlog(blog).getPath().substring(3);
+            if(user != null){
+                lbd.like(user.toString(), blog);
+            }
+            response.sendRedirect(path);
         }
     }
 
@@ -61,17 +59,16 @@ public class createBlogController extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.io.FileNotFoundException
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, FileNotFoundException {
+            throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(createBlogController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(createBlogController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(likeBlogController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(likeBlogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,17 +79,16 @@ public class createBlogController extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.io.FileNotFoundException
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, FileNotFoundException {
+            throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(createBlogController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(createBlogController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(likeBlogController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(likeBlogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
