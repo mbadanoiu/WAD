@@ -186,7 +186,7 @@
   <div id="header_layer2">
     <!-- Logo -->
     <div id="logo">
-        <img src="./images/smiley.png" alt="logo">
+        <img src="http://localhost:8080/WADProject/jsp/images/smiley.png" alt="logo">
       </div>
     <div id="business_name">
       <span>WorthFit</span>

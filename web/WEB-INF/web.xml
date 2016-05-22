@@ -28,6 +28,10 @@
         <servlet-name>createBlogController</servlet-name>
         <servlet-class>controllers.createBlogController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>buyController</servlet-name>
+        <servlet-class>controllers.buyController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>createBlogController</servlet-name>
         <url-pattern>/createBlogController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>buyController</servlet-name>
+        <url-pattern>/buyController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

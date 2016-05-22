@@ -45,7 +45,7 @@ public class gymPackageDAO {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                if((rs.getString(1)).equals(pName)){
+                if((rs.getString("PACKNAME")).equals(pName)){
                     ps.close();
                     return true;
                 }
@@ -82,29 +82,27 @@ public class gymPackageDAO {
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
-            int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
-            while (rs.next()){
-                rowsNo++;
-                for(int i=1; i<=columnsNo; i++){
-                    if(type.equals(rs.getString("PACKTYPE")) || type.equalsIgnoreCase("All")){
-                        if(i==6)
-                            imgTemp.add(rs.getBlob(i));
-                        else
-                            temp.add(rs.getString(i));
-                    }
+            while (rs.next()){                
+                if(type.equals(rs.getString("PACKTYPE")) || type.equalsIgnoreCase("All")){
+                    rowsNo++;
+                    imgTemp.add(rs.getBlob("IMAGE"));
+                    temp.add(rs.getString("PACKNAME"));
+                    temp.add(rs.getString("PACKTYPE"));
+                    temp.add(rs.getString("PRICE"));
+                    temp.add(rs.getString("GYMNAME"));
+                    temp.add(rs.getString("DESCRIPTION"));
+                    temp.add(rs.getString("AVAILABLE"));
                 }
             }
-            columnsNo--;
+            int elements = 6;
             for(int i=0; i<rowsNo; i++){
-                //if(type.equals(temp.get(i*columnsNo+1)) || type.equals("All")){
                     Blob blob = imgTemp.get(i);
                     InputStream binaryStream = blob.getBinaryStream(0, blob.length());
                     BufferedImage im = ImageIO.read(binaryStream);
-                    packages.add(new GymPackage(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2),
-                            Double.parseDouble(temp.get(i*columnsNo+3)), temp.get(i*columnsNo+4), temp.get(i*columnsNo+5),
-                            im, Boolean.parseBoolean(temp.get(i*columnsNo+6))));
-                //}
+                    packages.add(new GymPackage(temp.get(i*elements), temp.get(i*elements+1),
+                            Double.parseDouble(temp.get(i*elements+2)), temp.get(i*elements+3), temp.get(i*elements+4),
+                            im, Boolean.parseBoolean(temp.get(i*elements+5))));
             }
             ps.close();
         }
@@ -122,29 +120,27 @@ public class gymPackageDAO {
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
-            int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
-            while (rs.next()){
-                rowsNo++;
-                for(int i=1; i<=columnsNo; i++){
-                    if(gym.equals(rs.getString("GYMNAME")) || gym.equalsIgnoreCase("All")){
-                        if(i==6) ////////////////////remember to remove it or consider the displacement made by image path 
-                            imgTemp.add(rs.getBlob(i));
-                        else
-                            temp.add(rs.getString(i));
-                    }
+            while (rs.next()){                
+                if(gym.equals(rs.getString("GYMNAME")) || gym.equalsIgnoreCase("All")){
+                    rowsNo++;
+                    imgTemp.add(rs.getBlob("IMAGE"));
+                    temp.add(rs.getString("PACKNAME"));
+                    temp.add(rs.getString("PACKTYPE"));
+                    temp.add(rs.getString("PRICE"));
+                    temp.add(rs.getString("GYMNAME"));
+                    temp.add(rs.getString("DESCRIPTION"));
+                    temp.add(rs.getString("AVAILABLE"));
                 }
             }
-            columnsNo--;
+            int elements = 6;
             for(int i=0; i<rowsNo; i++){
-                //if(gym.equals(temp.get(i*columnsNo+3)) || gym.equals("All")){
                     Blob blob = imgTemp.get(i);
                     InputStream binaryStream = blob.getBinaryStream(0, blob.length());
                     BufferedImage im = ImageIO.read(binaryStream);
-                    packages.add(new GymPackage(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2),
-                            Double.parseDouble(temp.get(i*columnsNo+3)), temp.get(i*columnsNo+4), temp.get(i*columnsNo+5),
-                            im, Boolean.parseBoolean(temp.get(i*columnsNo+6))));
-                //}
+                    packages.add(new GymPackage(temp.get(i*elements), temp.get(i*elements+1),
+                            Double.parseDouble(temp.get(i*elements+2)), temp.get(i*elements+3), temp.get(i*elements+4),
+                            im, Boolean.parseBoolean(temp.get(i*elements+5))));
             }
             ps.close();
         }
@@ -162,25 +158,25 @@ public class gymPackageDAO {
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.gympackages");
             ResultSet rs = ps.executeQuery();
-            int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
-            while (rs.next()){
+            while (rs.next()){                
                 rowsNo++;
-                for(int i=1; i<=columnsNo; i++){
-                    if(i==6)
-                        imgTemp.add(rs.getBlob(i));
-                    else
-                        temp.add(rs.getString(i));
-                }
+                imgTemp.add(rs.getBlob("IMAGE"));
+                temp.add(rs.getString("PACKNAME"));
+                temp.add(rs.getString("PACKTYPE"));
+                temp.add(rs.getString("PRICE"));
+                temp.add(rs.getString("GYMNAME"));
+                temp.add(rs.getString("DESCRIPTION"));
+                temp.add(rs.getString("AVAILABLE"));
             }
-            columnsNo--;
+            int elements = 6;
             for(int i=0; i<rowsNo; i++){
-                Blob blob = imgTemp.get(i);
-                InputStream binaryStream = blob.getBinaryStream(0, blob.length());
-                BufferedImage im = ImageIO.read(binaryStream);
-                packages.add(new GymPackage(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2),
-                        Double.parseDouble(temp.get(i*columnsNo+3)), temp.get(i*columnsNo+4), temp.get(i*columnsNo+5),
-                        im, Boolean.parseBoolean(temp.get(i*columnsNo+6))));
+                    Blob blob = imgTemp.get(i);
+                    InputStream binaryStream = blob.getBinaryStream(0, blob.length());
+                    BufferedImage im = ImageIO.read(binaryStream);
+                    packages.add(new GymPackage(temp.get(i*elements), temp.get(i*elements+1),
+                            Double.parseDouble(temp.get(i*elements+2)), temp.get(i*elements+3), temp.get(i*elements+4),
+                            im, Boolean.parseBoolean(temp.get(i*elements+5))));
             }
             ps.close();
         }

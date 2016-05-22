@@ -232,7 +232,7 @@
                     <% }
             }
             else { %>
-                <font size="30" color="#20B2AA"> We are Experiencing Technical Difficulties with the Blog Database. Please Come Back Later <font>
+                <font size="30" color="#20B2AA"> We are Experiencing Technical Difficulties with the Blog Database. Please Come Back Later </font>
                 <%}%>
 	<div><br/>
 	<div class="login_blogs">

@@ -1,3 +1,8 @@
+<%@page import="models.GymPackage"%>
+<%@page import="daos.blogDAO"%>
+<%@page import="models.Blog"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="daos.likedblogDAO"%>
 <html>
  <head>
  <style>
@@ -174,6 +179,19 @@
         color:black;
         font-size: 20px;
       }
+      
+      #writtenBlogs,
+      #likedBlogs,
+      #purchedPacks {
+				color: #20B2AA;
+				font-size: 22px;
+			}
+       .firstblog {
+        width: 500px;
+        height: 200px;
+        background-color: palegreen;
+        margin-bottom: 20px;
+      }
 
     </style>
     <title>Login</title>
@@ -211,10 +229,71 @@
           admin=Boolean.parseBoolean(request.getSession().getAttribute("admin").toString());%>
                 <h4> <% if(admin) out.print("Admin "); %> <% out.print(user.toString()); %>'s Profile </h4>
             
+  <% if(admin) { %>
+    <a href="http://localhost:8080/WADProject/jsp/addPack.jsp"> Add Gym Packages </a>
+  <% } %>
   
-  <div id="writtenBlogs"> </div>
-  <div id="likedBlogs"> </div>
-  <div id="purchedPacks"> </div>
+  <div id="likedBlogs"> 
+      <% likedblogDAO lbd = likedblogDAO.getInstance();
+        ArrayList<Blog> blogs = lbd.getLikedBlogs(user.toString());
+        if(blogs != null){
+            if(!blogs.isEmpty())
+                for(Blog b : blogs) { %>
+                <div class="firstblog">
+                    <a href=" <% out.print(b.getPath()); %> "> <% out.print(b.getName()); %> </a> <br/>
+                    Author: <% out.print(b.getAuthor()); %> <br/>
+                    Type: <% out.print(b.getType()); %> <br/>
+                </div>
+                    <% }
+            }
+            else { %>
+                <font size="30" color="#20B2AA"> We are Experiencing Technical Difficulties with the Blog Database. Please Come Back Later </font>
+                <% } %>
+  </div><br/><br/>
+  <div id="writtenBlogs"> 
+      <% blogDAO bd = blogDAO.getInstance();
+        blogs = bd.getUserBlogs(user.toString());
+        if(blogs != null){
+            if(!blogs.isEmpty())
+                for(Blog b : blogs) { %>
+                <div class="firstblog">
+                    <a href=" <% out.print(b.getPath()); %> "> <% out.print(b.getName()); %> </a> <br/>
+                    Author: <% out.print(b.getAuthor()); %> <br/>
+                    Type: <% out.print(b.getType()); %> <br/>
+                </div>
+                    <% }
+            }
+            else { %>
+                <font size="30" color="#20B2AA"> We are Experiencing Technical Difficulties with the Blog Database. Please Come Back Later </font>
+                <% } %>
+  </div><br/><br/>
+  <div id="purchedPacks">
+     <% ArrayList<GymPackage> packs = (ArrayList<GymPackage>) request.getServletContext().getAttribute("packages");
+        if(packs != null){
+            if(!packs.isEmpty()) {
+                for(GymPackage p : packs) { %>
+  <img src=" <% out.print(p.getImage()); %> " alt="Java Buffer Image error"/>
+            Name: <% out.print(p.getName()); %> 
+            <input type="hidden" value="<% out.print(p.getName()); %>" name="Name"/> <br/>
+            Price: <% out.print(p.getPrice()); %>
+            <input type="hidden" value="<% out.print(p.getPrice()); %>" name="Price"/> <br/>
+            Gym: <% out.print(p.getGymName()); %> <br/>
+            Type: <% out.print(p.getType()); %> <br/>
+            <% String description = p.getDescription();
+                if(description != null)
+                    if(!description.isEmpty()) { %>
+            Description: <% out.print(description); %>
+                    <% } 
+                }
+            }
+            else { %>
+                <h4>Seems you have yet to purchase a gym pack from us. Happy fitness, and hope you sponsor us soon. </h4>
+            <% }
+        }
+        else { %>
+            <h4> We are Experiencing Technical Difficulties with the Gym Packages Database. Please Come Back Later </h4>
+        <% } %>
+  </div>
   <%-- ///////////////////////////////// --%>
   
 </div>

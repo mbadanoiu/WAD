@@ -1,3 +1,4 @@
+<%@page import="daos.clientDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="models.GymPackage"%>
 <!DOCTYPE html>
@@ -218,16 +219,31 @@
 
 <div class="content">
 	<div class="free_packs">
-		<h4><b>Free packs</b></h4>
+		<h4><b>All packs</b></h4>
         <% ArrayList<GymPackage> packs = (ArrayList<GymPackage>) request.getServletContext().getAttribute("packages");
         if(packs != null){
             if(!packs.isEmpty())
                 for(GymPackage p : packs) { %>
 	</div><br>
 	<div class="firstpack">
+            <% clientDAO cd = clientDAO.getInstance();
+                    if(user != null) {
+                        if(cd.hasCard(user.toString())) {%>
+            <form name="Form" method="POST" action="http://localhost:8080/WADProject/buyController">
+                        <% } 
+                        else { %>
+            <form name="Form" method="GET" action="http://localhost:8080/WADProject/jsp/cardAndTel.jsp">
+                <%-- see if get is the correct method to use here --%>
+                        <% }
+                    }
+                    else { %>
+            <form name="Form" method="GET" action="http://localhost:8080/WADProject/jsp/logOrRegister.jsp">
+                    <% } %>
             <img src=" <% out.print(p.getImage()); %> " alt="Java Buffer Image error"/>
-            Name: <% out.print(p.getName()); %> <br/>
-            Price: <% out.print(p.getPrice()); %> <br/>
+            Name: <% out.print(p.getName()); %> 
+            <input type="hidden" value="<% out.print(p.getName()); %>" name="Name"/> <br/>
+            Price: <% out.print(p.getPrice()); %>
+            <input type="hidden" value="<% out.print(p.getPrice()); %>" name="Price"/> <br/>
             Gym: <% out.print(p.getGymName()); %> <br/>
             Type: <% out.print(p.getType()); %> <br/>
             <% String description = p.getDescription();
@@ -235,6 +251,8 @@
                     if(!description.isEmpty()) { %>
             Description: <% out.print(description); %>
                     <% } %>
+            <input type="submit" value="Buy">
+            </form>
 	</div>
 	<% }
         }

@@ -79,18 +79,19 @@ public class blogDAO {
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.blogs");
             ResultSet rs = ps.executeQuery();
-            int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
             while (rs.next()){
                 rowsNo++;
-                for(int i=1; i<=columnsNo; i++){
-                    temp.add(rs.getString(i));
-                }
+                temp.add(rs.getString("BLOGNAME"));
+                temp.add(rs.getString("AUTHOR"));
+                temp.add(rs.getString("BLOGTYPE"));
+                temp.add(rs.getString("PATH"));
+                temp.add(rs.getString("PUBLIC"));
             }
-            columnsNo--;
-            for(int i=0; i<rowsNo; i++){
-                blogs.add(new Blog(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2), temp.get(i*columnsNo+3),
-                         temp.get(i*columnsNo+4), Boolean.parseBoolean(temp.get(i*columnsNo+5))));
+            int elements = 5;
+            for(int i=0; i<rowsNo*elements; i+=elements){
+                blogs.add(new Blog(temp.get(i), temp.get(i+1), temp.get(i+2),
+                         temp.get(i+3), Boolean.parseBoolean(temp.get(i+4))));
             }
             ps.close();
         }
@@ -107,19 +108,21 @@ public class blogDAO {
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.blogs");
             ResultSet rs = ps.executeQuery();
-            int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
             while (rs.next()){
-                rowsNo++;
-                for(int i=1; i<=columnsNo; i++){
-                    if(rs.getBoolean("PUBLIC"))
-                        temp.add(rs.getString(i));
+                if(rs.getBoolean("PUBLIC")){
+                    rowsNo++;
+                    temp.add(rs.getString("BLOGNAME"));
+                    temp.add(rs.getString("AUTHOR"));
+                    temp.add(rs.getString("BLOGTYPE"));
+                    temp.add(rs.getString("PATH"));
+                    temp.add(rs.getString("PUBLIC"));
                 }
             }
-            columnsNo--;
-            for(int i=0; i<rowsNo; i++){///////////////temp.get(i*columnsNo+1) because temp.get(i*columnsNo) is x auto incrementor id
-                blogs.add(new Blog(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2), temp.get(i*columnsNo+3),
-                         temp.get(i*columnsNo+4), Boolean.parseBoolean(temp.get(i*columnsNo+5))));
+            int elements = 5;
+            for(int i=0; i<rowsNo*elements; i+=elements){
+                blogs.add(new Blog(temp.get(i), temp.get(i+1), temp.get(i+2),
+                         temp.get(i+3), Boolean.parseBoolean(temp.get(i+4))));
             }
             ps.close();
         }
@@ -136,19 +139,52 @@ public class blogDAO {
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.blogs");
             ResultSet rs = ps.executeQuery();
-            int columnsNo=rs.getMetaData().getColumnCount();
             int rowsNo=0;
             while (rs.next()){
-                rowsNo++;
-                for(int i=1; i<=columnsNo; i++){
-                    if(type.equals(rs.getString("BLOGTYPE")) || type.equalsIgnoreCase("All"))
-                        temp.add(rs.getString(i));
+                if(type.equals(rs.getString("BLOGTYPE")) || type.equalsIgnoreCase("All")){
+                    rowsNo++;
+                    temp.add(rs.getString("BLOGNAME"));
+                    temp.add(rs.getString("AUTHOR"));
+                    temp.add(rs.getString("BLOGTYPE"));
+                    temp.add(rs.getString("PATH"));
+                    temp.add(rs.getString("PUBLIC"));
                 }
             }
-            columnsNo--;
-            for(int i=0; i<rowsNo; i++){
-                blogs.add(new Blog(temp.get(i*columnsNo+1), temp.get(i*columnsNo+2), temp.get(i*columnsNo+3),
-                         temp.get(i*columnsNo+4), Boolean.parseBoolean(temp.get(i*columnsNo+5))));
+            int elements = 5;
+            for(int i=0; i<rowsNo*elements; i+=elements){
+                blogs.add(new Blog(temp.get(i), temp.get(i+1), temp.get(i+2),
+                         temp.get(i+3), Boolean.parseBoolean(temp.get(i+4))));
+            }
+            ps.close();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return blogs;
+    }
+    
+    public ArrayList<Blog> getUserBlogs(String user) throws ClassNotFoundException, SQLException, IOException {
+        ArrayList<String> temp=new ArrayList<>();
+        ArrayList<Blog> blogs=new ArrayList<>();
+        connection=dbConnection.getConnection();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM wadproject.blogs");
+            ResultSet rs = ps.executeQuery();
+            int rowsNo=0;
+            while (rs.next()){                
+                if(user.equals(rs.getString("AUTHOR"))){
+                    rowsNo++;
+                    temp.add(rs.getString("BLOGNAME"));
+                    temp.add(rs.getString("AUTHOR"));
+                    temp.add(rs.getString("BLOGTYPE"));
+                    temp.add(rs.getString("PATH"));
+                    temp.add(rs.getString("PUBLIC"));
+                }
+            }
+            int elements = 5;
+            for(int i=0; i<rowsNo*elements; i+=elements){
+                blogs.add(new Blog(temp.get(i), temp.get(i+1), temp.get(i+2),
+                         temp.get(i+3), Boolean.parseBoolean(temp.get(i+4))));
             }
             ps.close();
         }
