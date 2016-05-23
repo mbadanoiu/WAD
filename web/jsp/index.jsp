@@ -3,6 +3,7 @@
 <html lang="en-US">
 	<head>
 
+
 	<style>
 	
 		body{
@@ -106,33 +107,33 @@
       }
 
       .blog_button{
-        width:400px;
+        width:304px;
+        height:350px;
+        background-color: #FFFFF0;
+        display: inline-block;
+        margin-left:110px;
+        margin-right: 70px;
+      }
+
+      .gym_button{
+        width:304px;
         height:350px;
         background-color: #FFFFF0;
         display: inline-block;
         margin-left:70px;
-        margin-right: 30px;
-      }
-
-      .gym_button{
-        width:400px;
-        height:350px;
-        background-color: #FFFFF0;
-        display: inline-block;
-        margin-left:40px;
         margin-right: auto;
       }
 
       .blog_title{
         color: #20B2AA;
-        width:200px;
-        margin-left:160px;
+        width:304px;
+        margin-left:120px;
       }
 
       .gym_title{
         color: #20B2AA;
-        width:250px;
-        margin-left: 120px;
+        width:304px;
+        margin-left: 70px;
       }
 
       #footer{
@@ -212,9 +213,53 @@
   		margin-left: auto;
   		margin-right: auto;
   	}
+  	.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #20B2AA;
+    max-width: 304px;
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {background-color: #d8d8d8}
+
+.blog_button:hover .dropdown-content {
+    display: block;
+}
+.gym_button:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #006699;
+}
+.sticky{
+      margin-left: 950px;
+      color: #20B2AA;
+      display: inline-block;
+    }
+    .logout{
+      text-decoration: underline;
+      display: inline-block;
+      margin-left: 20px;
+      color: #20B2AA;
+    }
+    .logout, a:link{
+      color: #20B2AA;
+    }
+
+
 
 	</style>
-        <title>WorthFit</title>
+		<title>WorthFit</title>
 	</head>
 
 <body>
@@ -222,6 +267,12 @@
 <!-- Header -->
 <div id="header">
 	<div id="header_layer1">
+	<div class="sticky">
+        <span><b>Hello, user!</b></span>
+        <div class="logout">
+        <a href="http://localhost:8080/WADProject/controllers/logoutController.java">Logout</a>
+        </div>
+    </div>
 	</div>
 
 	<div id="header_layer2">
@@ -246,7 +297,7 @@
 	</div>
 </div>
 <Br>
-<!-- Service div -->
+
 <div class="content">
 	<div class="content_div">
 		<div class="blog_button">
@@ -256,6 +307,9 @@
 			<a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="image">
 				<img src="http://localhost:8080/WADProject/jsp/images/blog.png" class="img-rounded" alt="blogs" width="304" height="170">
 			</div></a>
+			<div class="dropdown-content">
+    				<a href="#"><b>Click on the image to find out more about our articles!</b></a>
+  			</div>
 		</div>
 		<div class="gym_button">
 			<div class="gym_title">
@@ -264,6 +318,9 @@
 			<a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="image">
 				<img src="http://localhost:8080/WADProject/jsp/images/fitlog.png" class="img-rounded" alt="packs" width="304" height="170">
 			</div></a>
+			<div class="dropdown-content">
+    				<a href="#"><b>Click on the image to join a gym programme today!</b></a>
+  			</div>
 		</div>
 	</div>
 </div>
@@ -274,21 +331,23 @@
 	
 	<div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
-      <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Join Us</div></a>
-      <a href="programs.html"><div class="footerDetailSubtitle">Contact Us</div></a>
+      <a href="contactus.jsp"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
 
     <div class="footerDiv">
-      <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href=""><div class="footerDetailTitle">Details</div></a>
+      <a href="trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
 			
 		</div>
 	</div>
 </div>
 
 </body>
+
 </html>
+
