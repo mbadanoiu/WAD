@@ -10,7 +10,7 @@
 		<style>
 			/* BODY & GENERAL RULES */
 				body{
-					;	
+						
 					background-color: #FFFFF0;
 				    margin: 0px;
 				    font-family: "Arial";
@@ -184,6 +184,29 @@
 				color: #20B2AA;
 				font-size: 22px;
 			}
+			.sticky{
+      margin-left: 900px;
+      color: #20B2AA;
+      display: inline-block;
+    }
+    .logout{
+      text-decoration: underline;
+      display: inline-block;
+      margin-left: 20px;
+      color: #20B2AA;
+    }
+    .logout, a:link{
+      color: #20B2AA;
+    }
+    .home{
+      text-decoration: underline;
+      display: inline-block;
+      margin-left: 20px;
+      color: #20B2AA;
+    }
+    .home, a:link{
+      color: #20B2AA;
+    }
 		
 		</style>
                 <title>Gym Packs</title>
@@ -193,6 +216,15 @@
 <!-- Header -->
 <div id="header">
 	<div id="header_layer1">
+	<div class="sticky">
+        <span><b>Hello, user!</b></span>
+        <div class="logout">
+        <a href="http://localhost:8080/WADProject/controllers/logoutController.java">Logout</a>
+        </div>
+        <div class="home">
+        <a href="index.jsp">Home</a>
+        </div>
+    </div>
 	</div>
 
 	<div id="header_layer2">
@@ -269,7 +301,7 @@
 	
 		<div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
-      <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
@@ -278,8 +310,8 @@
     </div>
 
     <div class="footerDiv">
-      <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href=""><div class="footerDetailTitle">Details</div></a>
+      <a href="trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
 			
 		</div>
 	</div>

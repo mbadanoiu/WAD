@@ -280,7 +280,7 @@
   
     <div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
-      <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
@@ -289,8 +289,8 @@
     </div>
 
     <div class="footerDiv">
-      <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href=""><div class="footerDetailTitle">Details</div></a>
+      <a href="trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
       
     </div>
   </div>
