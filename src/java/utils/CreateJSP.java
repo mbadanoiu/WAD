@@ -230,15 +230,15 @@ public class CreateJSP {
                             "  <div class=\"Links\">\n" +
                             "    <div class=\"footerDiv\">\n" +
                             "      <div class=\"footerDetailTitle\">Fitness</div>\n" +
-                            "      <a href=\"about.html\"><div class=\"footerDetailSubtitle\">About Us</div></a>\n" +
+                            "      <a href=\"http://localhost:8080/WADProject/jsp/aboutus.jsp\"><div class=\"footerDetailSubtitle\">About Us</div></a>\n" +
                             "    </div>\n" +
                             "    <div class=\"footerDiv\">\n" +
                             "      <a href=\"\"><div class=\"footerDetailTitle\">Join Us</div></a>\n" +
-                            "      <a href=\"programs.html\"><div class=\"footerDetailSubtitle\">Contact Us</div></a>\n" +
+                            "      <a href=\"#\"><div class=\"footerDetailSubtitle\">Contact Us</div></a>\n" +
                             "    </div>\n" +
                             "    <div class=\"footerDiv\">\n" +
                             "      <a href=\"\"><div class=\"footerDetailTitle\">Prices</div></a>\n" +
-                            "      <a href=\"list.html\"><div class=\"footerDetailSubtitle\">Trainers</div></a>\n" +
+                            "      <a href=\"http://localhost:8080/WADProject/jsp/trainers.jsp\"><div class=\"footerDetailSubtitle\">Trainers</div></a>\n" +
                             "    </div>\n" +
                             "  </div>\n" +
                             "</div>\n" +

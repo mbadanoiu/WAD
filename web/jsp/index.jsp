@@ -266,12 +266,16 @@
 
 <!-- Header -->
 <div id="header">
+    <% Object user = request.getSession().getAttribute("user");
+                if(user != null) { %>
 	<div id="header_layer1">
-	<div class="sticky">
-        <span><b>Hello, user!</b></span>
-        <div class="logout">
-        <a href="http://localhost:8080/WADProject/controllers/logoutController.java">Logout</a>
-        </div>
+	
+                    <div class="sticky">
+                    <span><b>Hello, <% out.print(user.toString()); %>!</b></span>
+                    <div class="logout">
+                    <a href="http://localhost:8080/WADProject/logoutController">Logout</a>
+                    </div>
+                    <% } %>
     </div>
 	</div>
 
@@ -284,8 +288,7 @@
 		</div>
 		<a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
 		<a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
-                <% Object user = request.getSession().getAttribute("user");
-                        if(user == null) { %>
+                <%      if(user == null) { %>
 		<a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
 		<a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
                         <% } 
@@ -331,17 +334,17 @@
 	
 	<div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
-      <a href="aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
-      <a href=""><div class="footerDetailTitle">Join Us</div></a>
+      <a href="#"><div class="footerDetailTitle">Join Us</div></a>
       <a href="contactus.jsp"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
 
     <div class="footerDiv">
-      <a href=""><div class="footerDetailTitle">Details</div></a>
-      <a href="trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href="#"><div class="footerDetailTitle">Details</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
 			
 		</div>
 	</div>

@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Data;
 
 /**
  *
@@ -65,7 +66,9 @@ public class addPackController extends HttpServlet {
                             av=true;
                 gpd.addPackage(name, type, Double.parseDouble(price), gym, request.getParameter("Description"),
                         imagepath, av);
-                request.getServletContext().setAttribute("packages", gpd.getAllPackages());
+                //Data d = (Data) request.getServletContext().getAttribute("data");
+                //d.setGympackages(gpd.getAllPackages());
+                //request.getServletContext().setAttribute("data", d);
                 response.sendRedirect("jsp/profile.jsp");
             }
         }

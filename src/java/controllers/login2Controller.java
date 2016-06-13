@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Data;
 import utils.Hash;
 
 /**
@@ -52,6 +53,9 @@ public class login2Controller extends HttpServlet {
                     request.getSession().setAttribute("user", user);
                     request.getSession().setAttribute("admin", cd.isAdmin(user));
                     blogDAO bd = blogDAO.getInstance();
+                    //Data d = (Data) request.getServletContext().getAttribute("data");
+                    //d.setBlog(bd.getAllBlogs());
+                    //request.getServletContext().setAttribute("data", d);
                     request.getServletContext().setAttribute("blogs", bd.getAllBlogs());
                     if(cd.hasCard(user))
                         response.sendRedirect("jsp/gymPackages.jsp");

@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Data;
 
 /**
  *
@@ -40,8 +41,10 @@ public class logoutController extends HttpServlet {
             request.getSession().setAttribute("user", null);
             request.getSession().setAttribute("admin", null);
             blogDAO bd = blogDAO.getInstance();
-            request.getServletContext().setAttribute("blogs", bd.getPublicBlogs());
-            //request.getSession().setAttribute("blogs", getPublicBlogs());
+            //Data d = (Data) request.getServletContext().getAttribute("data");
+            //d.setBlog(bd.getPublicBlogs());
+            //request.getServletContext().setAttribute("data", d);
+            request.getSession().setAttribute("blogs", bd.getPublicBlogs());
             response.sendRedirect("jsp/login.jsp");
         }
     }

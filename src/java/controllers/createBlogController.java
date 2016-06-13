@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Data;
 
 /**
  *
@@ -44,11 +45,18 @@ public class createBlogController extends HttpServlet {
             blogDAO bd = blogDAO.getInstance();
             bd.addBlog(request.getParameter("BlogName"), request.getSession().getAttribute("user").toString(),
                     request.getParameter("BlogType"), pub, request.getParameter("Content"));
-            if(request.getSession().getAttribute("user") != null)
+            //Data d =(Data) request.getServletContext().getAttribute("data");
+            if(request.getSession().getAttribute("user") != null){
+                //d.setBlog(bd.getAllBlogs());
+                //request.getServletContext().setAttribute("data", d);
                 request.getServletContext().setAttribute("blogs", bd.getAllBlogs());
+            }
             else
-                if(pub)
+                if(pub){
+                    //d.setBlog(bd.getPublicBlogs());    
+                    //request.getServletContext().setAttribute("data", d);
                     request.getServletContext().setAttribute("blogs", bd.getPublicBlogs());
+                }
             response.sendRedirect("jsp/profile.jsp");
         }
     }

@@ -6,11 +6,15 @@
 
 package utils;
 
+import daos.gymPackageDAO;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -20,6 +24,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import models.Client;
+import models.GymPackage;
 
 /**
  *
@@ -71,10 +76,17 @@ public class AES {
         return c.getName()+c.getUname()+c.getGender()+salt;
     }
     
-//    public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException, UnsupportedEncodingException{
+//    public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException, UnsupportedEncodingException, ClassNotFoundException, SQLException, IOException{
 //        Client Ron = new Client("Ron", "Swatson", "rs@as.ro", "Male", "012931", "dormania", true);
 //        Client Rom = new Client("Rom", "Swanson", "rs@as.ro", "Male", "012931", "dormania", true);
 //        decrypt(Ron, encrypt(Ron, "123"));
 //        decrypt(Rom, encrypt(Rom, "123"));
+//        gymPackageDAO gpd = gymPackageDAO.getInstance();
+//        ArrayList<GymPackage> packs = gpd.getAllPackages();//(ArrayList<GymPackage>) request.getServletContext().getAttribute("packages");
+//        if(packs != null)
+//            if(!packs.isEmpty())
+//                for(GymPackage p : packs) {
+//                    System.out.println(p.getImage());
+//                }
 //    }
 }

@@ -216,15 +216,15 @@ Does thou even ascend objects of considerable mass?
   <div class="Links">
     <div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
-      <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Join Us</div></a>
-      <a href="programs.html"><div class="footerDetailSubtitle">Contact Us</div></a>
+      <a href="#"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
     </div>
   </div>
 </div>    </body>

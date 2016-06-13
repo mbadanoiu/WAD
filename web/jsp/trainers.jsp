@@ -266,26 +266,37 @@
 
 <!-- Header -->
 <div id="header">
+    <% Object user = request.getSession().getAttribute("user");
+                if(user != null) { %>
   <div id="header_layer1">
-  <div class="sticky">
-        <span><b>Hello, user!</b></span>
-        <div class="logout">
-        <a href="http://localhost:8080/WADProject/controllers/logoutController.java">Logout</a>
-        </div>
+  
+                    <div class="sticky">
+                    <span><b>Hello, <% out.print(user.toString()); %>!</b></span>
+                    <div class="logout">
+                    <a href="http://localhost:8080/WADProject/logoutController">Logout</a>
+                    </div>
+                    <% } %>
     </div>
   </div>
 
   <div id="header_layer2">
     <div id="logo">
-      <img src="./smiley.png">
+      <img src="http://localhost:8080/WADProject/jsp/images/smiley.png">
     </div>
     <div id="business_name">
       <div>WorthFit</div>
     </div>
-    <a href="gympacks.html"><div class="header_top last_header">Gym Packs</div></a>
-    <a href="blogs.jsp"><div class="header_top">Blog</div></a>
-    <a href="registration.html"><div class="header_top">Register</div></a>
-    <a href="login.jsp"><div class="header_top">Login</div></a>   
+    <a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/index.jsp"><div class="header_top">Home</div></a>
+    <% if (user == null) { %>
+    <a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
+    <% }
+    else { %>
+    <a href="http://localhost:8080/WADProject/jsp/profile.jsp"><div class="header_top">Profile</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/createBlog.jsp"><div class="header_top">Create Blog</div></a>
+    <% } %>
     <!-- menu -->
   </div>
 </div>
@@ -294,7 +305,7 @@
 <div class="content">
   <div class="tr1">
     <div class="tr1_img">
-      <img src="trainer1.png" class="img-rounded" alt="welcome" width="170" height="200">
+      <img src="http://localhost:8080/WADProject/jsp/images/trainer1.png" class="img-rounded" alt="welcome" width="170" height="200">
     </div>
     <div class="tr1_content">
       <span>Meet </span><span><b>Dylan</b><span>! He is the perfect trainer if you want to have a healthy lifestyle and keep your body in shape!</span>
@@ -302,7 +313,7 @@
   </div>
 <div class="tr2">
   <div class="tr2_img">
-      <img src="trainer2.png" class="img-rounded" alt="welcome" width="170" height="200">
+      <img src="http://localhost:8080/WADProject/jsp/images/trainer2.png" class="img-rounded" alt="welcome" width="170" height="200">
   </div>
   <div class="tr2_content">
     <span>This is </span><span><b>Miranda</b><span>! She can teach you how to relax and bring harmony into your exercising routine.</span>
@@ -311,7 +322,7 @@
 
 <div class="tr3">
   <div class="tr3_img">
-      <img src="trainer3.png" class="img-rounded" alt="welcome" width="170" height="200">
+      <img src="http://localhost:8080/WADProject/jsp/images/trainer3.png" class="img-rounded" alt="welcome" width="170" height="200">
   </div>
   <div class="tr3_content">
     <span><b>Sheila</b></span> <span> can show you fun and interesting ways to keep active in the gym, but also outside!</span>
@@ -331,17 +342,17 @@
   
   <div class="footerDiv">
     <div class="footerDetailTitle">Fitness</div>
-      <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="http://localhost:8080/WADProject/aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Join Us</div></a>
-      <a href="programs.html"><div class="footerDetailSubtitle">Contact Us</div></a>
+      <a href="http://localhost:8080/WADProject/programs.jsp"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href="#"><div class="footerDetailSubtitle">Trainers</div></a>
       
     </div>
   </div>

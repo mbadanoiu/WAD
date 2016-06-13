@@ -77,11 +77,11 @@ public class boughtPackageDAO {
                 PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM wadproject.boughtpackages WHERE USER = '"+ u +"' ");
                 ResultSet rs2 = ps2.executeQuery();
                 while(rs2.next()){
-                    PreparedStatement ps3 = connection.prepareStatement("SELECT * FROM wadproject.gympackages WHERE x = '"+ Integer.parseInt(rs2.getString("BLOG")) +"' ");
+                    PreparedStatement ps3 = connection.prepareStatement("SELECT * FROM wadproject.gympackages WHERE x = '"+ Integer.parseInt(rs2.getString("GYMPACK")) +"' ");
                     ResultSet rs3 = ps3.executeQuery();
                     rs3.next();
                     Blob blob = rs3.getBlob("IMAGE");
-                    InputStream binaryStream = blob.getBinaryStream(0, blob.length());
+                    InputStream binaryStream = blob.getBinaryStream(1, blob.length());
                     BufferedImage im = ImageIO.read(binaryStream);
                     boughtPacks.add(new GymPackage(rs3.getString("PACKNAME"), rs3.getString("PACKTYPE"), 
                             Double.parseDouble(rs3.getString("PRICE")), rs3.getString("GYMNAME"),

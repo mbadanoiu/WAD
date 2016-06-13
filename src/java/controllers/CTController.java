@@ -52,7 +52,7 @@ public class CTController extends HttpServlet {
                 rd.forward(request, response);
             }
             cd.addCard(request.getSession().getAttribute("user").toString(), tel, cc);
-            response.sendRedirect("/jsp/gymPackets.jsp");
+            response.sendRedirect("jsp/gymPackages.jsp");
         }
     }
 

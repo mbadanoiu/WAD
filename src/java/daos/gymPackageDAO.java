@@ -172,7 +172,7 @@ public class gymPackageDAO {
             int elements = 6;
             for(int i=0; i<rowsNo; i++){
                     Blob blob = imgTemp.get(i);
-                    InputStream binaryStream = blob.getBinaryStream(0, blob.length());
+                    InputStream binaryStream = blob.getBinaryStream(1, blob.length());
                     BufferedImage im = ImageIO.read(binaryStream);
                     packages.add(new GymPackage(temp.get(i*elements), temp.get(i*elements+1),
                             Double.parseDouble(temp.get(i*elements+2)), temp.get(i*elements+3), temp.get(i*elements+4),

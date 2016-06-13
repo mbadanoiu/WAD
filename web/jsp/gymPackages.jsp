@@ -1,3 +1,5 @@
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="java.io.ByteArrayOutputStream"%>
 <%@page import="daos.gymPackageDAO"%>
 <%@page import="daos.clientDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -215,29 +217,29 @@
 
 <!-- Header -->
 <div id="header">
+    <% Object user = request.getSession().getAttribute("user");
+                if(user != null) { %>
 	<div id="header_layer1">
-	<div class="sticky">
-        <span><b>Hello, user!</b></span>
-        <div class="logout">
-        <a href="http://localhost:8080/WADProject/controllers/logoutController.java">Logout</a>
-        </div>
-        <div class="home">
-        <a href="index.jsp">Home</a>
-        </div>
+	
+                    <div class="sticky">
+                    <span><b>Hello, <% out.print(user.toString()); %>!</b></span>
+                    <div class="logout">
+                    <a href="http://localhost:8080/WADProject/logoutController">Logout</a>
+                    </div>
+                    <% } %>
     </div>
 	</div>
 
 	<div id="header_layer2">
 		<div id="logo">
-			<img src="./images/smiley.png" alt="logo">
+			<img src="http://localhost:8080/WADProject/jsp/images/smiley.png" alt="logo">
 		</div>
 		<div id="business_name">
 			<span>WorthFit</span>
 		</div>
 		<a href="#"><div class="header_top last_header">Gym Packs</div></a>
 		<a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
-		<% Object user = request.getSession().getAttribute("user");
-                        if(user == null) { %>
+		<%      if(user == null) { %>
 		<a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
 		<a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
                         <% } 
@@ -272,8 +274,14 @@
                     }
                     else { %>
             <form name="Form" method="GET" action="http://localhost:8080/WADProject/jsp/logOrRegister.jsp">
-                    <% } %>
-            <img src=" <% out.print(p.getImage()); %> " alt="Java Buffer Image error"/>
+                    <% } 
+                    ByteArrayOutputStream bas = new ByteArrayOutputStream();
+                    ImageIO.write(p.getImage(), "jpg", bas);
+                    bas.flush();
+                    byte[] im = bas.toByteArray();
+                    bas.close();
+                    String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(im); %>
+            <img src="data:image/jpg;base64, <%= b64 %> " alt="Java Buffer Image error" width="50" height="50"/>
             Name: <% out.print(p.getName()); %> 
             <input type="hidden" value="<% out.print(p.getName()); %>" name="Name"/> <br/>
             Price: <% out.print(p.getPrice()); %>
@@ -301,7 +309,7 @@
 	
 		<div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
-      <a href="aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
@@ -311,7 +319,7 @@
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Details</div></a>
-      <a href="trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
 			
 		</div>
 	</div>

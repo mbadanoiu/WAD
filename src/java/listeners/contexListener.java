@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import models.Blog;
+import models.Data;
 import models.GymPackage;
 
 /**
@@ -30,10 +31,12 @@ public class contexListener implements ServletContextListener {
         try {
             blogDAO bd = blogDAO.getInstance();
             ArrayList<Blog> blogs = bd.getPublicBlogs();
-            gymPackageDAO gp = gymPackageDAO.getInstance();
-            ArrayList<GymPackage> packages = gp.getAllPackages();
             sce.getServletContext().setAttribute("blogs", blogs);
-            sce.getServletContext().setAttribute("packages", packages);
+            //gymPackageDAO gp = gymPackageDAO.getInstance();
+            //ArrayList<GymPackage> packages = gp.getAllPackages();
+            //Data d = new Data(blogs, packages);
+            //sce.getServletContext().setAttribute("data", d);
+            //sce.getServletContext().setAttribute("packages", packages);
         } catch (ClassNotFoundException | SQLException | IOException ex) {
             Logger.getLogger(contexListener.class.getName()).log(Level.SEVERE, null, ex);
         }

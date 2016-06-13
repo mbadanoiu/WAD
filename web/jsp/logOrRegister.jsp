@@ -25,7 +25,7 @@
           width: 100%;
           padding:0px;
           margin: 0px;
-          position: fixed;
+          //position: fixed;
           min-width: 1280px;
           z-index: 100;
         }
@@ -250,15 +250,10 @@
         extendedRegistration.jsp--%>
 
 <div id="header">
-  <div id="header_layer1">
-    <div class="sticky">
-        <span><b>Hello, user!</b></span>
-    </div>
-  </div>
 
   <div id="header_layer2">
     <div id="logo">
-      <img src="./smiley.png">
+        <img src="http://localhost:8080/WADProject/jsp/images/smiley.png" alt="logo">
     </div>
     <div id="business_name">
       <div>WorthFit</div>
@@ -267,7 +262,6 @@
     <!-- menu -->
   </div>
 </div>
-<div class="content">
 <div class="content">
 
 
@@ -301,7 +295,7 @@
   
   <div class="footerDiv">
     <div class="footerDetailTitle">Fitness</div>
-      <a href="aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
@@ -311,7 +305,7 @@
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
       
     </div>
   </div>

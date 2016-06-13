@@ -157,13 +157,12 @@ public class clientDAO {
                 }
                 PreparedStatement ps2;
                 if(c.getTel().isEmpty() || !c.getTel().equals(tel)){
-                    ps2 = connection.prepareStatement("INSERT INTO wadproject.clients (TELEPHONE, CREDITCARD)" 
-                            + " VALUES('"+tel+"', '"+ creditCard +"')"
+                    ps2 = connection.prepareStatement("UPDATE wadproject.clients SET TELEPHONE = '"+tel+"' ,"
+                            + " CREDITCARD = '"+ creditCard +"'"
                             + " WHERE USERNAME = '"+ uname +"' ");
                 }
                 else{
-                    ps2 = connection.prepareStatement("INSERT INTO wadproject.clients (CREDITCARD)" 
-                            + " VALUES('"+ creditCard +"')"
+                    ps2 = connection.prepareStatement("UPDATE wadproject.clients SET CREDITCARD = '"+ creditCard +"'"
                             + " WHERE USERNAME = '"+ uname +"' ");
                 }
                 ps2.executeUpdate();

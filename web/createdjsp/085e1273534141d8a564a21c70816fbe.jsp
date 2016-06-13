@@ -1,5 +1,8 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
- <head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <style>
       /* BODY & GENERAL RULES */
         body{  
@@ -174,15 +177,13 @@
         color:black;
         font-size: 20px;
       }
-
     </style>
-    <title>Login</title>
- </head>
- <body>
- <div id="header">
+        <title>as</title>
+    </head>
+    <body>
+<div id="header">
   <div id="header_layer1">
   </div>
-
   <div id="header_layer2">
     <!-- Logo -->
     <div id="logo">
@@ -193,58 +194,35 @@
     </div>
     <a href="http://localhost:8080/WADProject/jsp/gymPackages.jsp"><div class="header_top last_header">Gym Packs</div></a>
     <a href="http://localhost:8080/WADProject/jsp/blog.jsp"><div class="header_top">Blog</div></a>
-    <a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
-    <a href="#"><div class="header_top">Login</div></a>
+    <a href="http://localhost:8080/WADProject/jsp/createBlog.jsp"><div class="header_top">Create Blog</div></a>
     <!-- menu -->
   </div>
 </div>
 <Br>
 <!-- Service div -->
 <div class="content">
-  <div class="login_title">
-  <span><b>Login</b></span>
-  </div><br><br>
-  <%-- ///////////////////////////////// --%>
-  <% Object temp = request.getAttribute("fail");
-                if(temp != null)
-                    if(Boolean.parseBoolean(temp.toString())) { %>
-                    <font size="20" color="red"> Login Fail: Username or Password Mismatch </font>
-            <% } %>
-  <%-- ///////////////////////////////// --%>
-  <div class="formdiv">
-      <form name="Form" method="POST" <%--onsubmit="return validateLogin()" optional asta daca vrei sa filtrezi characterele speciale--%> action="http://localhost:8080/WADProject/loginController">
-      Username:<br>
-      <input type="text" name="Username"><br>
-      Password:<br>
-      <input type="password" name="Password"><br><br>
-      <input type="submit" value="Login">
-    </form> 
-
-  </div>
+<h2>as</h2>
+smy
 </div>
-
+<form method="POST" action="http://localhost:8080/WADProject/likeBlogController">
+    <input type="hidden" name="title" value="as">
+    <input type="submit" value="Like">
+</form>
 <div id="footer">
-  
   <div class="Links">
-  
     <div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
       <a href="http://localhost:8080/WADProject/jsp/aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
-
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Join Us</div></a>
-      <a href="programs.html"><div class="footerDetailSubtitle">Contact Us</div></a>
+      <a href="#"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
-
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Prices</div></a>
       <a href="http://localhost:8080/WADProject/jsp/trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
-      
     </div>
   </div>
 </div>
-
-
-</body>
+    </body>
 </html>

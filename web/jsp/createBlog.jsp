@@ -257,10 +257,11 @@
     </head>
     <body>
     <div id="header">
-    <div id="header_layer1">
-    <div class="sticky">
         <% Object user = request.getSession().getAttribute("user");
             if(user != null) { %>
+    <div id="header_layer1">
+    <div class="sticky">
+        
         <span><b>Hello, <% out.print(user.toString()); %>!</b></span>
         <div class="logout">
         <a href="http://localhost:8080/WADProject/logoutController">Logout</a>
@@ -281,6 +282,10 @@
         <% if(user != null) { %>
         <a href="http://localhost:8080/WADProject/jsp/registration.jsp"><div class="header_top">Register</div></a>
         <a href="http://localhost:8080/WADProject/jsp/login.jsp"><div class="header_top">Login</div></a>
+        <% }
+        else { %>
+        <a href="http://localhost:8080/WADProject/jsp/profile.jsp"><div class="header_top">Profile</div></a>
+        <a href="#"><div class="header_top">Create Blog</div></a>
         <% } %>
         
     </div>
@@ -316,7 +321,7 @@
     
     <div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
-      <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
@@ -326,7 +331,7 @@
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
             
         </div>
     </div>

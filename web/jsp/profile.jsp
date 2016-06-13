@@ -1,3 +1,8 @@
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="java.io.ByteArrayOutputStream"%>
+<%@page import="java.io.ByteArrayInputStream"%>
+<%@page import="daos.boughtPackageDAO"%>
+<%@page import="models.Data"%>
 <%@page import="daos.gymPackageDAO"%>
 <%@page import="models.GymPackage"%>
 <%@page import="daos.blogDAO"%>
@@ -195,7 +200,7 @@
       }
 
     </style>
-    <title>Login</title>
+    <title>Profile</title>
  </head>
  <body>
  <div id="header">
@@ -205,7 +210,7 @@
   <div id="header_layer2">
     <!-- Logo -->
     <div id="logo">
-        <img src="./images/smiley.png" alt="logo">
+        <img src="http://localhost:8080/WADProject/jsp/images/smiley.png" alt="logo">
       </div>
     <div id="business_name">
       <span>WorthFit</span>
@@ -237,7 +242,8 @@
     <a href="http://localhost:8080/WADProject/jsp/addPack.jsp"> Add Gym Packages </a>
   <% } %>
   
-  <div id="likedBlogs"> 
+  <div id="likedBlogs">
+      <h3>Blogs you Like</h3> <br/>
       <% likedblogDAO lbd = likedblogDAO.getInstance();
         ArrayList<Blog> blogs = lbd.getLikedBlogs(user.toString());
         if(blogs != null){
@@ -255,6 +261,7 @@
                 <% } %>
   </div><br/><br/>
   <div id="writtenBlogs"> 
+      <h3>Blogs Written By You</h3> <br/>
       <% blogDAO bd = blogDAO.getInstance();
         blogs = bd.getUserBlogs(user.toString());
         if(blogs != null){
@@ -276,12 +283,22 @@
                 <% } %>
   </div><br/><br/>
   <div id="purchedPacks">
-      <%gymPackageDAO gpd = gymPackageDAO.getInstance();
-        ArrayList<GymPackage> packs = gpd.getAllPackages();//(ArrayList<GymPackage>) request.getServletContext().getAttribute("packages");
+      <h3>Purchased Gym Packs</h3>
+      <% boughtPackageDAO bgpd = boughtPackageDAO.getInstance();
+        //Data d = (Data) request.getServletContext().getAttribute("data");
+        ArrayList<GymPackage> packs = null; 
+        if(user != null)
+            packs = bgpd.getBoughtPacks(user.toString()); //d.getGympackages();
         if(packs != null){
             if(!packs.isEmpty()) {
-                for(GymPackage p : packs) { %>
-  <img src=" <% out.print(p.getImage()); %> " alt="Java Buffer Image error"/>
+                for(GymPackage p : packs) { 
+                ByteArrayOutputStream bas = new ByteArrayOutputStream();
+                ImageIO.write(p.getImage(), "jpg", bas);
+                bas.flush();
+                byte[] im = bas.toByteArray();
+                bas.close();
+                String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(im); %>
+            <img src="data:image/jpg;base64, <%= b64 %> " alt="Java Buffer Image error" width="50" height="50"/>
             Name: <% out.print(p.getName()); %> <br/>
             Price: <% out.print(p.getPrice()); %> <br/>
             Gym: <% out.print(p.getGymName()); %> <br/>
@@ -291,8 +308,9 @@
                     if(!description.isEmpty()) { %>
             Description: <% out.print(description); %>
                     <% } 
-                }
-            }
+                } %>
+                <h4>Thank you for your Purchase</h4>
+            <% }
             else { %>
                 <h4>Seems you have yet to purchase a gym pack from us. Happy fitness, and hope you sponsor us soon. </h4>
             <% }
@@ -300,7 +318,7 @@
         else { %>
             <h4> We are Experiencing Technical Difficulties with the Gym Packages Database. Please Come Back Later </h4>
         <% } %>
-  </div>
+  </div> <br/>
   <%-- ///////////////////////////////// --%>
   
 </div>
@@ -315,17 +333,17 @@
   
     <div class="footerDiv">
       <div class="footerDetailTitle">Fitness</div>
-      <a href="about.html"><div class="footerDetailSubtitle">About Us</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/aboutus.jsp"><div class="footerDetailSubtitle">About Us</div></a>
     </div>
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Join Us</div></a>
-      <a href="programs.html"><div class="footerDetailSubtitle">Contact Us</div></a>
+      <a href="#"><div class="footerDetailSubtitle">Contact Us</div></a>
     </div>
 
     <div class="footerDiv">
       <a href=""><div class="footerDetailTitle">Prices</div></a>
-      <a href="list.html"><div class="footerDetailSubtitle">Trainers</div></a>
+      <a href="http://localhost:8080/WADProject/jsp/trainers.jsp"><div class="footerDetailSubtitle">Trainers</div></a>
       
     </div>
   </div>
